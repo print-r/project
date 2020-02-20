@@ -1,0 +1,45 @@
+.logo {
+  display: block;
+  width: 300px;
+  height: 90px;
+  margin: 232px auto 164px;
+}
+
+.loginBox {
+  width: 600px;
+  margin: 0 auto;
+}
+
+.loginBox .inputBox {
+  position: relative;
+  height: 70px;
+  margin-bottom: 22px;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.loginBox .inputBox img {
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px;
+  height: 42px;
+}
+
+.loginBox .inputBox input {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 100%;
+  background-color: transparent !important;
+  text-align: center;
+  font-size: 30px;
+  color: #454545;
+}
+
+.loginBtn {
+  width: 618px;
+  height: 98px;
+  margin: 124px auto 0;
+}

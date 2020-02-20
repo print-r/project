@@ -1,0 +1,155 @@
+@charset 'utf8';
+
+@mixin justified
+{
+    display: flex;
+    justify-content: space-between;
+}
+
+.layout-2
+{
+    padding-bottom: 120px;
+}
+.section
+{
+    padding:20px 36px;
+
+    .info
+    {
+        
+        font-family: PingFangSC-Medium;
+        font-size: 14px;
+        color:#666;
+
+        margin:36px 0;
+
+        .name_rank
+        {
+            @include justified();
+
+            font-size: 28px;
+            
+            margin-bottom: 22px;
+
+            .name,.rank
+            {
+                color: #323232;
+                font-size: 36px;
+                font-weight: 700;
+            }
+            .rank
+            {
+                color:#666;
+            }
+        }
+
+        .variety
+        {
+            @include justified();
+            
+            .left
+            {
+                display: flex;
+                flex-direction: column;
+                
+                .variety_name
+                {
+                    margin-bottom: 16px;
+                }
+            }
+            .variety_btn
+            {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                width: 214px;
+                height: 70px;
+
+                font-size: 28px;
+                color:#fff;
+                background-color: $act_color;
+
+                margin-top: 10px;
+
+                border-radius: 50px;
+            }
+        }
+        .foot
+        {
+            @include justified();
+
+            margin-top: 16px;
+
+            .tic_count
+            {
+                font-size: 18px;
+            }
+        }
+        
+       
+    }
+
+    .desc
+    {
+        color:#666;
+        font-size: 14px;
+
+        line-height: 40px;
+        
+        padding:28px;
+
+        border:1.1px solid #eee;
+
+        border-radius: 10px;
+
+        word-wrap: break-word;
+        word-break: normal;
+    }
+
+    .detail
+    {
+        img
+        {
+            margin:36px 0;
+        }
+    }
+    
+    .join
+    {
+        position: fixed;
+        bottom: 0;
+
+        display: flex;
+        align-items: center;
+
+        width: 100%;
+        height: 120px;
+       
+        color:#fff;
+        font-size: 32px;
+        
+        text-align: center;
+
+        
+        
+        background-color: #fff;
+
+        z-index:6;
+        .text
+        {
+            width: 678px;
+            height: 88px;
+            line-height: 88px;
+
+            background-color: $act_color;
+            border-radius: 50px;
+        }
+    }
+
+    .disabled
+    {
+        background-color: #C9C9C9 !important;
+        // opacity: .3;
+    }
+}

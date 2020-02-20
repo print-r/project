@@ -1,0 +1,191 @@
+@charset "UTF-8";
+/*reset*/
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100%;
+  margin: 0 auto;
+}
+
+article, aside, dialog, footer, header, section, footer, nav, figure, menu {
+  display: block;
+}
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, figure, section, legend, textarea, p, blockquote, th, td, input, select, textarea, button {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font: 14px/1.4 "Microsoft Yahei",Arial,Helvetica,sans-serif;
+  background-color: #fff;
+  color: #424242;
+  max-width: $max_width;
+  margin: 0 auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+ul, ol, dd, dt, dl {
+  list-style-type: none;
+}
+
+a {
+  color: #333;
+  text-decoration: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  color: inherit;
+  display: block;
+}
+
+a, input, select {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -webkit-border-radius: 0;
+}
+
+input, img {
+  border: none;
+  padding: 0;
+  font-size: 14px;
+}
+
+i, em {
+  font-style: normal;
+}
+
+:focus {
+  outline: none;
+}
+
+img {
+  display: block;
+  width: 100%;
+  vertical-align: middle;
+}
+
+/*iphone6*/
+@media (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) {
+  body {
+    font-size: 14.5px;
+  }
+}
+
+/*iphone6plus*/
+@media (min-device-width: 414px) and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 3) {
+  body {
+    font-size: 15.5px;
+  }
+}
+
+/*原子类*/
+.clear {
+  clear: both;
+}
+
+.clear:after {
+  display: block;
+  clear: both;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+.mb10 {
+  margin-bottom: 10px;
+}
+
+.mt10 {
+  margin-top: 10px;
+}
+
+/*placeholder css*/
+::-moz-placeholder {
+  font-family: "Microsoft YaHei";
+}
+
+::-webkit-input-placeholder {
+  font-family: "Microsoft YaHei";
+}
+
+::-ms-input-placeholder {
+  font-family: "Microsoft YaHei";
+}
+
+
+.layout
+{
+  padding-top: 108px;
+  padding-bottom: 100px;
+}
+
+.layout-2
+{
+  padding-top: 108px;
+}
+
+//遮罩层
+.shade
+{
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  max-width: $max_width;
+  height: 100%;
+
+  // padding-bottom: 100px;
+
+  background-color: rgba(0,0,0,.5);
+
+  box-sizing: border-box;
+
+  z-index: 11;
+}
+
+/* 图片预览样式 */
+.pswp__top-bar
+{
+    margin-top: 20px;
+    padding:0 20px;
+
+    .pswp__counter
+    {
+        left: 50%;
+
+        transform: translateX(-50%);
+
+        font-size: 30px;
+    }
+    .pswp__button 
+    {
+        transform: scale(2)
+    }
+}
+.pswp__button--zoom,.pswp__button--arrow--left,.pswp__button--arrow--right
+{
+    display: none !important;
+}

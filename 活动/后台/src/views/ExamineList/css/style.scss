@@ -1,0 +1,49 @@
+@charset 'utf8';
+.top{
+    background-color: #fff;
+}
+.examineList{
+    position: relative;
+    left: 0px;
+    right: 0px;
+    background-color: #f9f9f9;
+    .examin_warp{
+        .examin_item{
+            width: 706px;
+            height: 184px;
+
+            background-color: #fff;
+
+            margin: 22px auto 0;
+            padding: 50px 26px 48px 26px;
+
+            box-sizing: border-box;
+
+            border-radius: 5px;
+            box-shadow: 0px 1px 4px rgba(0,0,0,.2);
+            .examin_top{
+                display: flex;
+                justify-content: space-between;
+                .examin_tit{
+                    font-size: 26px;
+                    color: #000;
+                    font-weight: bold;
+
+                    padding-bottom: 38px;
+                }
+                .examin_num{
+                    color: #000;
+                    span{
+                        color: #3182f0;
+                        font-weight: bold;
+                    }
+                }
+            }
+            .examin_time{
+                color: #999;
+                font-size: 22px;
+            }
+        }
+    }
+}
+

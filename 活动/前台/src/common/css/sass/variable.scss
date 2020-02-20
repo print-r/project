@@ -1,0 +1,24 @@
+@charset 'utf8';
+/**
+** 全局sass变量管理
+*/
+
+//主题颜色(暂时用不到了)
+$color:#0972FA;
+
+//活动页主题
+$act_color:#475D44;
+
+//最大宽度
+$max_width:750px;
+
+//文字省略（默认单行省略）
+@mixin omit($num:1)
+{
+  display: -webkit-box !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $num;
+}

@@ -1,0 +1,124 @@
+.top{
+    background-color: #fff;
+}
+.tips
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+
+    color:#999;
+    font-size: 28px;
+}
+
+.examinePageWarp{
+    display: flex;
+
+    height: 76px;
+    .examine_nav{
+        flex: .5;
+
+        font-size: 28px;
+        
+        display: flex;
+        justify-content: center;
+
+        span{
+            display: inline-block;
+
+            color: #898989;
+
+            width: 90px;
+            height: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        &.active{
+            span{
+                color: #121212;
+                border-bottom: 4px solid #519afd;
+            }
+        }
+    }
+}
+
+.examinePageCont{
+    
+
+    .examinePageItem{
+        width: 706px;
+        height: 194px;
+
+        box-sizing: border-box;
+        padding: 50px 26px 40px 26px;
+        margin: 22px auto 0;
+
+        border-radius: 5px;
+        box-shadow: 0px 1px 4px rgba(0,0,0,.2);
+
+        background-color: #fff;
+        .examinePage_top{
+            display: flex;
+            justify-content: space-between;
+            .examinePage_left{
+                display: flex;
+               
+                .examinePage_tit{
+                    font-size: 26px;
+                    color: #000;
+                    font-weight: bold;
+
+                    margin-right: 20px;
+                }
+                .examinePage_status{
+                    font-size: 22px;
+                    color: #3182f0;
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    width: 110px;
+                    height: 38px;
+                    border-radius: 30px;
+
+                    background-color: #f3f8ff;
+
+                    &.success{
+                        background-color: #f5fff3;
+                        color: #29b530;
+                    }
+
+                    &.error{
+                        background-color: #fff3f3;
+                        color: #f03131;
+                    }
+                }
+            }
+            .examinePage_detail{
+              
+                color: #898989;
+                span{
+                    font-size: 22px;
+                }
+                i{
+                    font-size: 18px;
+                }
+            }
+        }
+        .examinePage_cont{
+            margin-top: 40px;
+
+            font-size: 24px;
+            color: #898989;
+
+            width: 490px;
+            overflow: hidden;
+            text-overflow:ellipsis;//文本溢出显示省略号
+            white-space: nowrap;//文本不换行
+        }
+    }
+}
