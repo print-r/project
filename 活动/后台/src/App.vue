@@ -18,9 +18,26 @@ export default class App extends Vue {
   @Vuex.State('keepAlive') public keepAlive!: string[];
   private created(): void {
     this.handleSyncAddCache();
+    window.onload = () => {
+      
+      document.addEventListener('touchstart', (event: any) => {
+        const ev = event || window.event;
+        if (ev.touches.length > 1) {
+          ev.preventDefault();
+        }
+      });
+      document.addEventListener('gesturestart', (event: Event) => {
+        const ev = event || window.event;
+        ev.preventDefault();
+      });
+    };
   }
 }
+
+
+
 </script>
+
 
 <style lang="scss">
 @import './assets/style/common.scss';

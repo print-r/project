@@ -68,7 +68,7 @@ export default class ExamineList extends Vue {
     // 转换格式
     private tiemFormat(time: string): string {
         const getTime = time.replace( /-/g , '\/' );
-        const timeRub = new Date(time).getTime();
+        const timeRub = new Date(getTime).getTime();
         const year = new Date(timeRub).getFullYear();
         let month: number|string = new Date(timeRub).getMonth() + 1;
         month = month < 10 ? '0' + month : month;
