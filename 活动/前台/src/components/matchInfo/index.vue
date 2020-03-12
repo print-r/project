@@ -11,8 +11,8 @@
                     <div class="not_votes">{{ (listMap.id && listMap.gain_votes + '票') || '暂无票数'}}</div>
                 </div>
             </div>
-            <div class="right_btn" :style="`background-color:${$store.state.color}`">
-                <div  @click="handleJoin">{{listMap.id ? listMap.isOver ?'已结束':'拉助力' : '去参赛'}}</div>
+            <div class="right_btn wxShare" @click="handleJoin" :style="`background-color:${$store.state.color}`">
+                <div>{{listMap.id ? listMap.isOver ?'已结束':'拉助力' : '去参赛'}}</div>
             </div>
         </div>
         <!-- 分享 -->

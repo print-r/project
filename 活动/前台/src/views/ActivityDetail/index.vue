@@ -330,6 +330,12 @@ export default {
         },
     },
     mounted(){
+        // 分享进来的
+        if(this.$route.query.isShare)
+        {
+            sessionStorage.setItem('isBuy',this.$route.query.isBuy)
+            sessionStorage.setItem('activityId',this.$route.query.activity_id)
+        }
         //用户id
         this.mid = this.$getUserInfo().mid
 

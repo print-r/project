@@ -139,7 +139,7 @@ export default {
                 this.shareParam = {
                   title : '大尚国际-投票活动', // 分享标题
                   desc : `我正在参加${a_title}活动，快来帮我投一票吧！`, // 分享描述
-                  link : `http://www.dusun.com.cn/openVote.do#/ActivityDetail?activity_id=${val.activity_id}&id=${val.id}&isShare=true`, // 分享链接
+                  link : `http://www.dusun.com.cn/openVote.do#/ActivityDetail?activity_id=${val.activity_id}&id=${val.id}&isBuy=${sessionStorage.getItem('isBuy')}&isShare=true`, // 分享链接
                   imgUrl, // 分享图标
                 }
             }
