@@ -294,6 +294,9 @@ export default {
             s:document.querySelector('.s')
         }
     },
+    activated(){
+       if(this.title) document.title = this.title
+    },
     computed:{
         ...mapState([
         'keepAlive',

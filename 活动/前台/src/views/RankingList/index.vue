@@ -91,12 +91,7 @@ export default {
       isShow: true,
       isTimeOut: false,
       timeOut:'',
-      shareParam:{
-        // title : `大尚国际-${sessionStorage.getItem('a_title')}活动`, // 分享标题
-        // desc : `我正在参加${sessionStorage.getItem('a_title')}活动，快来帮我投一票吧！`, // 分享描述
-        // link : url, // 分享链接
-        // imgUrl, // 分享图标
-      }
+      shareParam:{} // h5微信分享数据
     };
   },
   mounted() {
@@ -140,10 +135,11 @@ export default {
             if(val.mid == this.$getUserInfo().mid)
             {
                 let imgUrl = val.portrait.indexOf('http') != -1 ? val.portrait : 'http:' + val.portrait;
+                let a_title = sessionStorage.getItem('a_title') || '投票';
                 this.shareParam = {
-                  title : `大尚国际-${sessionStorage.getItem('a_title')}活动`, // 分享标题
-                  desc : `我正在参加${sessionStorage.getItem('a_title')}活动，快来帮我投一票吧！`, // 分享描述
-                  link : `http://www.dusun.com.cn/openVote.do#/ActivityDetail?activity_id=${val.activity_id}&id=${val.id}&a_title=${sessionStorage.getItem('a_title')}&isBuy=${sessionStorage.getItem('isBuy')}&isShare=true`, // 分享链接
+                  title : '大尚国际-投票活动', // 分享标题
+                  desc : `我正在参加${a_title}活动，快来帮我投一票吧！`, // 分享描述
+                  link : `http://www.dusun.com.cn/openVote.do#/ActivityDetail?activity_id=${val.activity_id}&id=${val.id}&isShare=true`, // 分享链接
                   imgUrl, // 分享图标
                 }
             }

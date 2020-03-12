@@ -38,11 +38,11 @@
         </div>
          <!-- 参与 -->
         <div class="join wxShare">
-            <router-link v-if="list.state == 1 && !isOver" :to="{'path':'/ActivityList'}" replace class="iconfont icon-toupiaohuodong-toupiao" :style="`background-color:${$store.state.color}`"><span>投票</span></router-link>
+            <router-link v-if="!isOver && status != 0 && mid == list.mid" :to="{'path':'/ActivityList'}" replace class="iconfont icon-toupiaohuodong-toupiao" :style="`background-color:${$store.state.color}`"><span>投票</span></router-link>
             <div v-if="list.status" class="text" :class="{disabled:list.status.disabled}" @click="handleJoin" :style="`background-color:${$store.state.color}`">
                 {{list.status.text}}
             </div>
-            <router-link v-if="list.state == 1 && !isOver" :to="{'path':'/Personal'}" replace class="iconfont icon-toupiaohuodong-gerenzhongxin" :style="`background-color:${$store.state.color}`"><span>我的</span></router-link>
+            <router-link v-if="!isOver && status != 0 && mid == list.mid" :to="{'path':'/Personal'}" replace class="iconfont icon-toupiaohuodong-gerenzhongxin" :style="`background-color:${$store.state.color}`"><span>我的</span></router-link>
         </div>
         <!-- 投票成功弹窗 -->
         <!-- <popup :isOpen="voteSuccess" /> -->
@@ -185,9 +185,9 @@ export default {
                             //投票状态
                             voteStatus = Boolean(~~res.data.signTime)
                             //参与文字
-                            text = Boolean(~~res.data.sign) ? '返回' : '我要参与'
+                            text = Boolean(~~res.data.sign) ? '返回活动页' : '我要参与'
                             //参与状态
-                            disabled = Boolean(~~res.data.sign)
+                            // disabled = Boolean(~~res.data.sign)
                         }
                         
                     }
@@ -282,11 +282,11 @@ export default {
                         case 1:
                             // 活动标题
                             let a_title = this.a_title
-                            let url = `${window.location.href}&a_title=${a_title}&isBuy=${sessionStorage.getItem('isBuy')}&isShare=true`;
+                            let url = `${window.location.href}&isBuy=${sessionStorage.getItem('isBuy')}&isShare=true`;
                             let imgUrl = this.list.portrait.indexOf('http') != -1 ? this.list.portrait : 'http:' + this.list.portrait;
                             //去拉票
                             this.shareParam = {
-                                title : `大尚国际-${a_title}活动`, // 分享标题
+                                title : '大尚国际-投票活动', // 分享标题
                                 desc : `我正在参加${a_title}活动，快来帮我投一票吧！`, // 分享描述
                                 link : url, // 分享链接
                                 imgUrl, // 分享图标
@@ -334,7 +334,7 @@ export default {
         this.mid = this.$getUserInfo().mid
 
         //活动标题
-        this.a_title = sessionStorage.getItem('a_title') || this.$route.query.a_title
+        this.a_title = sessionStorage.getItem('a_title') || '投票'
 
         //获取数据
         this.handleGetData()
