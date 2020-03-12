@@ -106,6 +106,7 @@ export default {
             photo:[], //图集
             sign:'', // 活动参与状态
             shareParam:{}, // 分享数据
+            a_title:'', // 活动标题
         }
     },
     methods:{
@@ -279,12 +280,14 @@ export default {
                             this.$router.go(-1)
                         break; 
                         case 1:
-                            let url = `${window.location.href}&isBuy=${sessionStorage.getItem('isBuy')}&isShare=true`;
+                            // 活动标题
+                            let a_title = this.a_title
+                            let url = `${window.location.href}&a_title=${a_title}&isBuy=${sessionStorage.getItem('isBuy')}&isShare=true`;
                             let imgUrl = this.list.portrait.indexOf('http') != -1 ? this.list.portrait : 'http:' + this.list.portrait;
                             //去拉票
                             this.shareParam = {
-                                title : `大尚国际-${sessionStorage.getItem('a_title')}活动`, // 分享标题
-                                desc : `我正在参加${sessionStorage.getItem('a_title')}活动，快来帮我投一票吧！`, // 分享描述
+                                title : `大尚国际-${a_title}活动`, // 分享标题
+                                desc : `我正在参加${a_title}活动，快来帮我投一票吧！`, // 分享描述
                                 link : url, // 分享链接
                                 imgUrl, // 分享图标
                             }
@@ -329,6 +332,9 @@ export default {
     mounted(){
         //用户id
         this.mid = this.$getUserInfo().mid
+
+        //活动标题
+        this.a_title = sessionStorage.getItem('a_title') || this.$route.query.a_title
 
         //获取数据
         this.handleGetData()
