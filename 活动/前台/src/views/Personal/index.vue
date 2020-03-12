@@ -6,11 +6,10 @@
             <div class="top">
                 <!-- 用户信息 -->
                 <div class="info">
-                
                     <div class="avatar">
                         <img :src="$getUserInfo().img || 'http://www.dusun.com.cn/form/myDuSun/util/images/user_face_03.jpg'" alt="">
                     </div>
-                    <span>微信账号</span>
+                    <span class="username">{{$getUserInfo().mn}}</span>
                 </div>
                 <!-- 收货地址 -->
                 <div class="address" >
@@ -26,7 +25,7 @@
                 <div class="item" @click="handleChange(1)"  :class="{active:active}">
                     中奖记录
                 </div>
-                <i class="line" :style="`${$route.params.isInner === true ? 'border-bottom:2px solid' + color : ''};transform:translateX(${speed})`"></i>
+                <i class="line" :style="`${$route.params.isInner === true ? `border-bottom:2px solid ${color}` : ''};transform:translateX(${speed})`"></i>
             </div>
             <!-- 活动信息 -->
             <ul class="list_info" v-show="!active">
@@ -124,7 +123,7 @@
                 </li>
             </ul>
             <div class="not_tips" v-if="list[active] && list[active].length <= 0">
-                <img :src="'./static/images/' + tipsImg[active]" alt="">
+                <img :src="tipsImg[active]" alt="">
                 <div class="text">
                     <span>{{active == 0 ? '您还没有参加活动~' : '您还没有中奖'}}</span>
                     <router-link :style="`color:${$route.params.isInner ? color : ''}`" :to="{path:'/Activity'}">去逛逛</router-link>
@@ -161,7 +160,7 @@ export default {
         return{
             active:0,// 0活动数据，1中奖数据
             list:[],
-            tipsImg:['not_activity.jpg','not_prize.jpg'],
+            tipsImg:[require('../../../static/images/not_activity.jpg'),require('../../../static/images/not_prize.jpg')],
             speed:0,
             imgUrl:'//www.dusun.com.cn/form_mobile/myDuSun/index/images/1.png'
         }
@@ -193,6 +192,7 @@ export default {
             let site = items[this.active].offsetLeft + (items[this.active].clientWidth  / 2) - (document.querySelector('.line').clientWidth / 2)
 
             this.speed = site + 'px'
+        
         },
         //获取数据
         handleGetData()
@@ -204,10 +204,11 @@ export default {
             }).then( res => {
                for(let name in res.data)
                {
+                   if(name == 'sizeNum') continue;
                    if(name == 'ListUserVoteList')
                    {
                        res.data[name].forEach( val => {
-                            var dateVal = Date.now() > new Date(val.end_time).getTime();     
+                            var dateVal = Date.now() > new Date(val.end_time.replace(/\-/g, "/")).getTime();     
                             if(dateVal)   //false                                   
                             {
                                 val.className = 'js'
@@ -297,7 +298,8 @@ export default {
                    console.log('库存不足');
                 }
              })
-        }       
+        },
+              
     },
 
     mounted(){

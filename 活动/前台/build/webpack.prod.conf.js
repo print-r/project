@@ -23,7 +23,11 @@ const webpackConfig = merge(baseWebpackConfig, {
   },
   devtool: config.build.productionSourceMap ? config.build.devtool : false,
   output: {
-    publicPath:'./',
+    // publicPath:'./',
+    // 本地环境
+    // publicPath:'http://localhost/Dusun_mall/form_mobile/activityApp/app/dist/',
+    // 线上环境
+    publicPath:'http://www.dusun.com.cn/form_mobile/activityApp/app/dist/',
     path: config.build.assetsRoot,
     filename: utils.assetsPath('js/[name].[chunkhash].js'),
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')

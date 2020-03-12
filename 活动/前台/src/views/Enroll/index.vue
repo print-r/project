@@ -72,7 +72,7 @@
                 </div>
                 <div class="item" :class="{error:formData.region.check}">
                     <div class="text">所在地区</div>
-                    <div class="input" @click="handleShowRegion">
+                    <div class="input" @click="areaVisible = true">
                         <span>{{regionText || '请选择地区'}}</span>
                         <!-- <i class="iconfont icon-you1"></i> -->
                     </div>
@@ -400,11 +400,6 @@ export default {
                 this.formData.pictures.check = false
             }
         },
-        //显示地区
-        handleShowRegion()
-        {
-            this.areaVisible = true
-        },
         //设置地区值
         handleSetRegion(val)
         {
@@ -490,7 +485,8 @@ export default {
                 MOBILE:this.formData.tel.data, //联系方式
                 area_id:this.formData.region.data, // 地区id
                 ADDRESS:this.formData.address.data, //收货地址
-                activity_attribute_id:this.attr_id, //活动属性id      
+                activity_attribute_id:this.attr_id, //活动属性id    
+                is_buy_first:sessionStorage.getItem('isBuy')
             }
             //属性数据
             this.formData.attrData.forEach( (val,key) => {
@@ -511,9 +507,9 @@ export default {
     },
     mounted(){
         let activity_id = this.$route.query.activity_id || sessionStorage.getItem('activityId') 
-        if(!activity_id)
+        if(!activity_id || !sessionStorage.getItem('isBuy'))
         {
-            this.$layer.alert('参数有误',() => {this.$router.go(-2)})
+            this.$layer.alert('参数有误',() => {this.$router.replace({path:'/ActivityList'})})
             return
         }
         //获取属性数据

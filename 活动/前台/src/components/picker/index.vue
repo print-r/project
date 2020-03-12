@@ -35,16 +35,19 @@ export default {
         },
         province_id(id)
         {   
-            this.slots[1].values = this.region.cityList.filter( val => {
-                return id == val.parentid
-            })
-            
+            try{
+                this.slots[1].values = this.region.cityList.filter( val => {
+                    return id == val.parentid
+                })
+            }catch(e){}
         },
         city_id(id)
         {
-            this.slots[2].values = this.region.areaList.filter( val => {
-                return id == val.parentid
-            })
+            try{
+                this.slots[2].values = this.region.areaList.filter( val => {
+                    return id == val.parentid
+                })
+            }catch(e){}
         }
     },
     data(){
@@ -101,9 +104,11 @@ export default {
                 //数据筛选
                 if(i > 0)
                 {
-                    this.slots[i].values = this.region[params[i]].filter( val => {
-                        return this.slots[ i - 1].values[index || 0].id == val.parentid
-                    })
+                    try{
+                        this.slots[i].values = this.region[params[i]].filter( val => {
+                            return this.slots[ i - 1].values[index || 0].id == val.parentid
+                        })
+                    }catch(e){}
                 }else
                 {
                     this.slots[i].values = this.region[params[i]]

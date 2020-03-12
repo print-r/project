@@ -27,13 +27,17 @@
                 }
             }
 
-            span
+            .username
             {
+                flex:1;
+                
                 font-size: 32px;
 
                 font-weight: 700;
 
                 margin-left: 32px;
+
+                @include omit();
             }
         }
         .address
@@ -202,7 +206,7 @@
                     padding:2px 8px;
                     margin-left: 15px;
 
-                    font-size: 12px;
+                    font-size: 20px;
                     color:#fff;
 
                     border-radius: 5px;
@@ -242,7 +246,7 @@
             .end_time
             {
                 color:#999;
-                font-size: 12px;
+                font-size: 22px;
             }
 
             .sh

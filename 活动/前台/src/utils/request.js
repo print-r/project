@@ -33,14 +33,22 @@ HTTP.interceptors.response.use(
 );
 
 const request = (params,file = false) => {
-  //loading
-  _this.$layer.open({type:2,content:'加载中'});
-
+  if(params.url.indexOf('getH5share.do') != -1)
+  {
+    // 微信分享接口需要用formData请求（数据处理）
+    params.data = params.params
+    delete params.params
+  }else
+  {
+    //loading
+    _this.$layer.open({type:2,content:'加载中'});
+  }
   return new Promise((resolve, reject) =>{
     //项目路径
     params.url = process.env.BASE_API + params.url
     //POST序列化数据
     if(!file) params.data = QS.stringify(params.data)
+    
     HTTP(params)
     .then((res) => {
       _this.$layer.closeAll()

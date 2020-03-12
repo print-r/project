@@ -9,18 +9,20 @@
         <img src="/static/images/pf.png" alt />
         <!-- 梯形 -->
         <ul class="trapezoid">
-          <li v-for="(val, key) in rank" :key="key">
-            <div class="hg" v-if="key == 1">
-              <img src="../../../static//images/hg.png" alt />
+          <li v-for="(val, key) in rank" :key="key"> 
+            <div v-if="val.id">
+                <div class="hg" v-if="key == 1">
+                  <img src="../../../static//images/hg.png" alt />
+                </div>
+                <div class="avatar">
+                  <img :src="val.portrait" alt />
+                </div>
+                <div class="tips">
+                  <img :src="val.img" alt />
+                </div>
+                <div class="code">ID：{{ val.id }}</div>
+                <div class="vote_count">{{ val.gain_votes || 0 }}票</div>
             </div>
-            <div class="avatar">
-              <img :src="val.portrait" alt />
-            </div>
-            <div class="tips">
-              <img :src="val.img" alt />
-            </div>
-            <div class="code">ID：{{ val.id }}</div>
-            <div class="vote_count">{{ val.gain_votes }}票</div>
           </li>
         </ul>
         <div class="end_time">
@@ -38,11 +40,11 @@
             </div>
             <span>ID：{{ val.id }}</span>
           </div>
-          <div class="right">{{ val.gain_votes }}票</div>
+          <div class="right">{{ val.gain_votes || 0 }}票</div>
         </li>
       </ul>
       <!-- 用户参赛信息 -->
-      <match-info :isJoin="isJoin" :listMap.sync="info" />
+      <match-info :isJoin="isJoin" :listMap.sync="info" :shareParam="shareParam" />
       <!-- 底部导航 -->
     </div>
     <div class="rank_empty" v-if="!isShow">
@@ -88,10 +90,15 @@ export default {
       info:{},
       isShow: true,
       isTimeOut: false,
-      timeOut:''
+      timeOut:'',
+      shareParam:{
+        // title : `大尚国际-${sessionStorage.getItem('a_title')}活动`, // 分享标题
+        // desc : `我正在参加${sessionStorage.getItem('a_title')}活动，快来帮我投一票吧！`, // 分享描述
+        // link : url, // 分享链接
+        // imgUrl, // 分享图标
+      }
     };
   },
-  created() {},
   mounted() {
     // 获取元素
     this.$nextTick(()=>{
@@ -119,12 +126,29 @@ export default {
         })
       }).then(res => {
         this.listMap = res.data;
+        
         this.isJoin =
           JSON.stringify(this.listMap.mapRankingByIdList) == "{}"
             ? true
             : false;
-        if(!this.isJoin) this.info = this.listMap.mapRankingByIdList
         
+        if(!this.isJoin)
+        {
+          this.info = this.listMap.mapRankingByIdList
+          // 获取当前用户参赛数据(用于分享)
+          this.listMap.getRankingList.forEach( val => {
+            if(val.mid == this.$getUserInfo().mid)
+            {
+                let imgUrl = val.portrait.indexOf('http') != -1 ? val.portrait : 'http:' + val.portrait;
+                this.shareParam = {
+                  title : `大尚国际-${sessionStorage.getItem('a_title')}活动`, // 分享标题
+                  desc : `我正在参加${sessionStorage.getItem('a_title')}活动，快来帮我投一票吧！`, // 分享描述
+                  link : `http://www.dusun.com.cn/openVote.do#/ActivityDetail?activity_id=${val.activity_id}&id=${val.id}&isBuy=${sessionStorage.getItem('isBuy')}&isShare=true`, // 分享链接
+                  imgUrl, // 分享图标
+                }
+            }
+          })
+        }
         // this.listMap.getRankingList = [];
         if (this.listMap.getRankingList.length) {
           let imgs = [
@@ -149,6 +173,9 @@ export default {
         } else {
           this.isShow = false;
         }
+         /* 解决ios时间乱码兼容 */
+        res.data.mapRankingTime.start_time = res.data.mapRankingTime.start_time.replace(/\-/g, "/")
+        res.data.mapRankingTime.end_time = res.data.mapRankingTime.end_time.replace(/\-/g, "/")
         //开始时间
         let start_time = new Date(
           res.data.mapRankingTime.start_time
@@ -187,12 +214,9 @@ export default {
         //活动结束
         this.$layer.alert("活动结束了");
       } else {
-        // 跳转报名页
-        this.$router.push({
-          path:"/Enroll",
-          query:{
-            activity_id:this.listMap.mapRankingTime.id
-          }
+        // 活动列表
+        this.$router.replace({
+          path:"/ActivityList",
         })
       }
     },

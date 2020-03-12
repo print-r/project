@@ -5,7 +5,7 @@
                 <li v-for="(val,key) in list.data" :key="key" :class="{active:$route.name == val.url && list.data.length <= 2}" :style="`color:${$route.name == val.url && list.data.length >= 5 ? $store.state.color : ''};width:${100 / list.data.length}%`">
                     <div class="item" @click="handleJumpUrl(val.url,val.isInner)">
                         <i :class="val.icon" ></i>
-                        <div>{{val.name}}</div>
+                        <div class="text">{{val.name}}</div>
                     </div>
                 </li>
             </ul>
@@ -80,6 +80,10 @@ export default {
                     i
                     {
                         font-size: 36px;
+                    }
+                    .text
+                    {
+                        font-size: 24px;
                     }
                 }
             }

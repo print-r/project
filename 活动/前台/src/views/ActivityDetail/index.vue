@@ -1,5 +1,5 @@
 <template>
-    <div class="layout-2">
+    <div class="layout-2" v-if="isShow">
         <top :title="title" />
         <div class="section">
             <!-- 列表图 -->
@@ -35,14 +35,32 @@
                 <img v-for="(val,key) in list.imgs" :key="key" preview :src="val">
             </div>
             <banner />
-            <!-- 参与 -->
-            <div class="join">
-                <div v-if="list.status" class="text" :class="{disabled:list.status.disabled}" @click="handleJoin" :style="`background-color:${$store.state.color}`">
-                    {{list.status.text}}
-                </div>
-            </div>
         </div>
-        <popup :isOpen="voteSuccess" />
+         <!-- 参与 -->
+        <div class="join wxShare">
+            <router-link v-if="list.state == 1 && !isOver" :to="{'path':'/ActivityList'}" replace class="iconfont icon-toupiaohuodong-toupiao" :style="`background-color:${$store.state.color}`"><span>投票</span></router-link>
+            <div v-if="list.status" class="text" :class="{disabled:list.status.disabled}" @click="handleJoin" :style="`background-color:${$store.state.color}`">
+                {{list.status.text}}
+            </div>
+            <router-link v-if="list.state == 1 && !isOver" :to="{'path':'/Personal'}" replace class="iconfont icon-toupiaohuodong-gerenzhongxin" :style="`background-color:${$store.state.color}`"><span>我的</span></router-link>
+        </div>
+        <!-- 投票成功弹窗 -->
+        <!-- <popup :isOpen="voteSuccess" /> -->
+        <div class="popup" v-if="voteSuccess" :class="voteAnimate ? 'zoomIn' : 'zoomOut'">
+            <div class="icon" @click="handleClosePopup">
+                <i class="iconfont icon-toupiaohuodong-shanchu"></i>
+            </div>
+            <div class="img">
+                <img src="../../../static/images/vot_success.png" alt="">
+            </div>
+            <div class="title_text">感谢您！投票成功</div>
+            <div class="text">了解活动，参与投票得大奖</div>
+            <div class="btn" @click="$router.back(-1)">查看活动</div>
+        </div>
+        <!-- 遮罩层 -->
+        <div class="shade" v-if="voteSuccess"></div>
+        <!-- 分享 -->
+        <wxShare :param="shareParam" />
     </div>
 </template>
 
@@ -51,13 +69,15 @@ import {mapState,mapMutations} from 'vuex'
 import top from '@/components/Index/header.vue'
 import banner from '@/components/banner/index.vue'
 import popup from '@/components/votePopup/index.vue'
+import wxShare from '@/components/wxShare/index.vue'
 import {getActivityDetailData,handleActionVote} from '@/api/activity'
 export default {
     name:'ActivityDetail',
     components:{
         top,
         banner,
-        popup
+        popup,
+        wxShare
     },
     beforeRouteEnter(to,from,next)
     {
@@ -75,13 +95,17 @@ export default {
     },
     data(){
         return{
+            isShow:true,
             mid:'', //用户id
             title:'详情', //标题
             status:'', //当前状态
             isOver:false, //活动状态
             voteSuccess:false, //投票成功弹框
+            voteAnimate:true, // 弹窗动画
             list:{},
             photo:[], //图集
+            sign:'', // 活动参与状态
+            shareParam:{}, // 分享数据
         }
     },
     methods:{
@@ -118,9 +142,9 @@ export default {
                 //投票文字
                 let voteText = ''
                 //开始时间
-                let start_time = new Date(this.list.start_time).getTime()
+                let start_time = new Date(this.list.start_time.replace(/\-/g, "/")).getTime()
                 //结束时间
-                let end_time = new Date(this.list.end_time).getTime()
+                let end_time = new Date(this.list.end_time.replace(/\-/g, "/")).getTime()
                 //当前时间
                 let now = Date.now()
                 
@@ -218,6 +242,16 @@ export default {
             })
             
         },
+        //关闭投票弹窗
+        handleClosePopup()
+        {
+            this.voteAnimate = false
+
+            setTimeout(() => {
+                this.voteSuccess = false
+                this.voteAnimate = true
+            },200)
+        },
         //页面跳转
         handleJoin()
         {
@@ -245,7 +279,15 @@ export default {
                             this.$router.go(-1)
                         break; 
                         case 1:
+                            let url = `${window.location.href}&isBuy=${sessionStorage.getItem('isBuy')}&isShare=true`;
+                            let imgUrl = this.list.portrait.indexOf('http') != -1 ? this.list.portrait : 'http:' + this.list.portrait;
                             //去拉票
+                            this.shareParam = {
+                                title : `大尚国际-${sessionStorage.getItem('a_title')}活动`, // 分享标题
+                                desc : `我正在参加${sessionStorage.getItem('a_title')}活动，快来帮我投一票吧！`, // 分享描述
+                                link : url, // 分享链接
+                                imgUrl, // 分享图标
+                            }
                         break; 
                         case 2:
                             //已驳回
@@ -262,25 +304,32 @@ export default {
                 {
                     if(!this.list.status.disabled)
                     {
-                        //可参与
-                        this.$router.push({
-                            path:'/Enroll',
-                            query:{
-                                activity_id
-                            } 
-                        })
-                    }else
-                    {
-                        //不可参与
-                        this.$router.go(-1)
+                        // 分享进来的
+                        if(this.$route.query.isShare)
+                        {
+                            let id = this.$route.query.activity_id
+                            let isBuy = this.$route.query.isBuy
+                            this.$router.replace({
+                                path:'/ActivityList',
+                                params:{
+                                    id,
+                                    isBuy
+                                }
+                            })
+                            return
+                        }
+                        
                     }
+
+                    this.$router.go(-1)
                 }
             }
-        }
+        },
     },
     mounted(){
         //用户id
         this.mid = this.$getUserInfo().mid
+
         //获取数据
         this.handleGetData()
     },

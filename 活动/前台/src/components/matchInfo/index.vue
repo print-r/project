@@ -15,12 +15,18 @@
                 <div  @click="handleJoin">{{listMap.id ? listMap.isOver ?'已结束':'拉助力' : '去参赛'}}</div>
             </div>
         </div>
+        <!-- 分享 -->
+        <wxShare :param="shareData" />
     </div>
 </template>
 
 <script>
+import wxShare from '@/components/wxShare/index.vue'
 export default {
     name:'matchInfo',
+    components:{
+        wxShare
+    },
     props:{
         isJoin:{
             type:Boolean,
@@ -28,6 +34,14 @@ export default {
         },
         listMap:{
             type:[Object,String],
+            default:() => { return {}}
+        },
+        sign:{
+            type:String,
+            default:'0'
+        },
+        shareParam:{
+            type:Object,
             default:() => { return {}}
         }
     },
@@ -37,7 +51,12 @@ export default {
                this.$emit('update:listMap',typeof this.listMap == 'string' ? JSON.parse(this.listMap) :this.listMap)
            },
            deep:true
-       } 
+       }
+    },
+    data(){
+        return{
+            shareData:{}
+        }
     },
     methods:{
         handleJoin()
@@ -45,6 +64,13 @@ export default {
             //未参赛
             if(JSON.stringify(this.listMap) == '{}')
             {
+                // 需要购买商品才可参与活动
+                if(this.sign == '4')
+                {
+                    // 显示弹窗
+                    this.$emit('update:joinPopup',true)
+                    return
+                }
                 this.$router.push({
                     path:'/Enroll',
                     query:{
@@ -55,13 +81,15 @@ export default {
             {
                 if(this.listMap.isOver)
                 {
-                    console.log('活动结束了')
+                    this.$router.replace({
+                        path:'/Activity',
+                    })
                 }else {
-                    console.log('拉助力')
+                    this.shareData = Object.assign({},this.shareParam)
                 }
             }
         }
-    }
+    },
 }
 </script>
 
@@ -123,7 +151,7 @@ export default {
                 }
                 .not_votes
                 {
-                    font-size: 12px;
+                    font-size: 22px;
                     color:#888;
 
                     margin-top: 3px;
@@ -132,14 +160,15 @@ export default {
         }
         .right_btn
         {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
             width: 128px;
             height: 56px;
-            line-height: 56px;
 
             color:#fff;
             font-size: 26px;
-
-            text-align: center;
 
             border-radius: 30px;
 

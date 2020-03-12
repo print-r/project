@@ -92,7 +92,7 @@ export default {
             display: flex;
             justify-content: space-between;
 
-            font-size: 12px;
+            font-size: 22px;
             div
             {
                 width: 198px;

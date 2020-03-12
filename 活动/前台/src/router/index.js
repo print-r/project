@@ -8,7 +8,7 @@ Vue.use(Router)
  * TODO:路由必须填写name属性，并且路由name属性必须与页面name属性一致，否则缓存会失败
  */
 const router = new Router({
-  mode:process.env.ROUTER_MODE,
+  mode:process.env.NODE_ENV == 'production' ? 'hash' : 'history',
   routes: [
     {
       path: '/',

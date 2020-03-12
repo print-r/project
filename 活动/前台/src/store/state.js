@@ -1,4 +1,5 @@
 import router from '../router'
+import {handleCheckWeiXin} from '../utils/common';
 
 const state = {
     keepAlive:[], // 缓存组件
@@ -56,7 +57,8 @@ const state = {
     previewOptions:{ //图片预览插件配置
         fullscreenEl:false, //关闭全屏按钮
         loop:false, // 关闭无缝预览
-    }
+    },
+    weChat:handleCheckWeiXin(), // 判断是否为微信浏览器
 }
 
 //保存缓存组件名称

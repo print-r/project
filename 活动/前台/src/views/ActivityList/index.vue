@@ -50,7 +50,7 @@
                         <div class="desc">
                             <div class="name">{{val.attribute1}}</div>
                             <div class="praise_count">已获{{val.gain_votes}}赞</div>
-                            <div class="vote" :style="`color:${color}`">{{isOver ? '活动已结束' : '投TA一票' }}</div>
+                            <div class="vote">{{isOver ? '活动已结束' : '投TA一票' }}</div>
                         </div>
                     </router-link>
                 </li>
@@ -63,9 +63,10 @@
             <!-- banner -->
             <banner v-if="list.length < bannerSlot" />
         </div>
-        
+        <!-- 需要购买商品才可参加活动弹框 -->
+        <joinPopup :joinPopup.sync="joinPopup" :product_id="product_id" />
         <!-- 用户活动信息 -->
-        <match-info :isJoin="isJoin" />
+        <match-info :isJoin="isJoin" :sign="sign" :joinPopup.sync="joinPopup" />
         <!-- 活动结束弹窗 -->
         <overPopup :isOver.sync="isOpen"/>
         <!-- 底部导航 -->
@@ -81,6 +82,7 @@ import top from '@/components/Index/header.vue';
 import {countDown} from '@/utils/common'
 import matchInfo from '@/components/matchInfo/index.vue'
 import overPopup from '@/components/overPopup/index.vue'
+import joinPopup from '@/components/joinPopup/index.vue'
 import {getActivityListData} from '@/api/activity'
 export default {
     name:'ActivityList',
@@ -89,7 +91,8 @@ export default {
         overPopup,
         tabbar,
         top,
-        banner
+        banner,
+        joinPopup
     },
     beforeRouteEnter(to,from,next)
     {
@@ -110,36 +113,54 @@ export default {
             isJoin:true, //用户是否参与
             isStart:false, //判断活动是否开始
             productUrl:'', //商品地址
-            bannerSlot:10
+            bannerSlot:10, // 商品楼层广告插入
+            isBuy:sessionStorage.getItem('isBuy'), // 后台需要的参数
+            product_id:0, // 商品ID
+            sign:'', // 活动参与状态
+            joinPopup:false, // 参赛弹窗
+            joinPopupAnimate:true,
         }
     },
     methods:{
         ...mapMutations({
             handleAdd:'handleAdd',
-            handleRemove:'handleRemove'
         }),
         //获取投票列表数据
         handleGetData()
         {
+            // 活动参与状态
+            let is_buy_first = this.$route.params.isBuy || this.isBuy
             //获取数据
             getActivityListData({
                 mapStr:JSON.stringify({
                     activity_id:this.id,
-                    mid:this.$getUserInfo().mid
+                    mid:this.$getUserInfo().mid,
+                    is_buy_first
                 })
             }).then( res => {
                 //标题
                 this.title = res.data.ListVoteIndex[0].activity_title
+                //保存标题（分享需要用到）
+                sessionStorage.setItem('a_title',this.title);
                 //设置标题
                 document.title = this.title
+                //保存活动参与状态
+                this.sign = res.data.sign
+                // 商品id
+                this.product_id = res.data.getMapRegularPro.product_id
                 //商品地址
                 this.productUrl = res.data.ListVoteIndex[0].prize_url
                 //判断是否参与
                 this.isJoin = Boolean(~~res.data.sign)
+                // 判断商品规则(可参与)
+                if(res.data.sign == '4') this.isJoin = false
                 //活动列表
                 this.list = res.data.ListVoteDetailed
                 //海报图
                 this.activityImg = res.data.ListVoteIndex[0].activity_img
+                /* 解决ios时间乱码兼容 */
+                res.data.ListVoteIndex[0].start_time = res.data.ListVoteIndex[0].start_time.replace(/\-/g, "/")
+                res.data.ListVoteIndex[0].end_time = res.data.ListVoteIndex[0].end_time.replace(/\-/g, "/")
                 //开始时间
                 let start_time = new Date(res.data.ListVoteIndex[0].start_time).getTime()
                 //结束时间
@@ -255,9 +276,11 @@ export default {
                     }
                 })
             }
-        }
+        },
     },
     mounted(){
+        // 保存活动参与规则
+        if(this.$route.params.isBuy) sessionStorage.setItem('isBuy',this.$route.params.isBuy)
         //保存活动列表id（防止页面刷新参数丢失）
         if(this.$route.params.id) sessionStorage.setItem('activityId',this.$route.params.id)
         this.id = this.$route.params.id || sessionStorage.getItem('activityId')

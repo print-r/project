@@ -250,7 +250,7 @@
                     height: 40px;
                     line-height: 40px;
                     
-                    font-size: 14px;
+                    font-size: 24px;
                     color:#fff;
                     background-color: $act_color;
 
@@ -290,14 +290,14 @@
                     height: 50px;
                     line-height: 50px;
 
-                    font-size: 12px;
-                    color:#00662D;
+                    font-size: 22px;
+                    color:#000;
 
                     border-radius: 25px;
 
                     margin: 0 auto;
 
-                    background-color: #FFF000;
+                    background-color: #fff;
 
                     z-index:5;
 
@@ -307,3 +307,71 @@
     }
 }
 
+.join_popup
+{
+    position: fixed;
+    top: 166px;
+    left: 10%;
+
+    width: 80%;
+
+    font-family: PingFang-SC-Bold;
+    text-align: center;
+
+    padding: 0 42px;
+
+    background: url('/static/images/popup_activity_bg.png') no-repeat;
+    background-size: 100%;
+
+    animation-duration: .3s !important;
+
+    box-sizing: border-box;
+
+    z-index:12;
+
+    .icon_img
+    {
+        width: 40%;
+
+        margin: 210px auto 62px;
+    }
+
+    .text_title
+    {
+        font-size: 32px;
+        color: #7b90ef;
+        margin-bottom: 38px;
+    }
+
+    .text_tips
+    {
+        font-family: PingFang-SC-Medium;
+        font-size: 24px;
+        color: rgba(0,0,0,.6);
+
+        line-height: 40px;
+    }
+
+    .btn_buy
+    {
+        width: 480px;
+        height: 80px;
+        line-height: 80px;
+
+        font-size: 30px;
+        color: #fff;
+
+        margin: 90px auto 132px;
+
+        border-radius: 10px;
+        background-color: #7b90ef;
+
+    }
+
+    .close
+    {
+        width: 65px;
+
+        margin: 0 auto;
+    }
+}

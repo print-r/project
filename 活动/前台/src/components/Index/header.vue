@@ -1,12 +1,13 @@
 <template>
-    <div class="top">
-       <div>
-            <span class="back iconfont icon-zuobian" @click="handleGoBack" v-if="isGoBack"></span>
+    <div class="top" v-if="!weChat" >
+        <div >
+            <span class="back iconfont " @click="handleGoBack" :class="isGoBack ? 'icon-zuobian' : 'icon-toupiaohuodong-toupiao border'"></span>
             <h3 class="title">{{ title || $route.meta.title}}</h3>
-       </div>
+        </div>
     </div>
 </template>
 <script>
+import {mapState} from 'vuex'
 export default {
     name:'top',
     props:{
@@ -25,6 +26,12 @@ export default {
     },
     methods:{
         handleGoBack(){
+
+            if(!this.isGoBack)
+            {
+                window.location.href = 'http://www.dusun.com.cn/';
+                return
+            }
             
             if(this.$route.name == 'Cropper')
             {
@@ -50,7 +57,12 @@ export default {
             
             this.$router.go(-1)
         }
-    }
+    },
+    computed:{
+        ...mapState([
+        'weChat'
+        ])
+    },
 }
 </script>
 
@@ -90,6 +102,14 @@ export default {
             opacity: 0.9;
             
         }
+    }
+
+    .border
+    {
+        padding:8px 10px;
+
+        border-radius: 50%;
+        border:1.5px solid #eee;
     }
     
 </style>

@@ -47,25 +47,39 @@ function size(data) {
 //获取用户信息
 export function getUserInfo()
 {
-  let cookieName = ['mi1','img','name'];
+  let cookieName = ['mi1','img','mn'];
   let userInfo = {}
-  cookieName.forEach( (val,key) => {
-	var cookieValue = null;//返回cookie的value值 
-	if (document.cookie && document.cookie != '') {
-		var cookies = document.cookie.split(';');//将获得的所有cookie切割成数组 
-		for (var i = 0; i < cookies.length; i+=1) {
-			var cookie = cookies[i];//得到某下标的cookies数组 
-			if (cookie.substring(0, val.length + 2).trim() == val.trim()+ "=") {//如果存在该cookie的话就将cookie的值拿出来 
-				cookieValue = unescape(cookie.substring(val.length + 2,cookie.length));
-				var data = cookieValue.split(',')[0];
+  let cookieValue = document.cookie.split(';')
+  if(cookieValue)
+  {
+	let data = null
+	cookieName.forEach( (val,key) => {
+		cookieValue.forEach( item => {
+			data = item.split('=')
+			if(data[0].replace(/\s+/g,"") == val)
+			{
 				if(val == 'img')
 				{
-					data = data ? (data.indexOf('http') == 0 ? data : '//img.dusun.com.cn/uploadimg/' + data) : ''
+					data[1] = data[1] ? (data[1].indexOf('http') == 0 ? data[1] : '//img.dusun.com.cn/uploadimg/' + data[1]) : ''
 				}
-				userInfo[key == 0 ? 'mid' : val] = data
+				userInfo[key == 0 ? 'mid' : val] = key == 0 ? unescape(data[1]).split(',')[0]  : unescape(data[1])
 			}
-		}	
-	}
-  })
+		})
+	})
+  }
   return userInfo
+}
+
+// 判断是否为微信浏览器
+export function handleCheckWeiXin() 
+{
+	var ua = window.navigator.userAgent.toLowerCase();
+	if (ua.match(/MicroMessenger/i) == 'micromessenger') 
+	{
+		return true; // 微信端
+	} 
+	else 
+	{
+		return false;
+	}
 }

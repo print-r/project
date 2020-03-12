@@ -2,18 +2,18 @@
     <div class="content layout">
        <top :isGoBack.sync="isGoBack" :current.sync="current" />
        <div class="cate_content">
-            <ul class="cate">
+            <ul class="cate" :class="{'weChat-cate':weChat}">
                 <li v-for="(val,key) in cateList" :key="key">
                     <span :class="{active:active == key}" @click="handleChangeCate(key)">{{val}}</span>
                 </li>
             </ul>
-            <i class="line" :style="`${isGoBack === true ? 'border-bottom:2px solid' + color : ''};transform:translateX(${speed})`"></i>
+            <i class="line" :style="`${isGoBack === true ? `border-bottom:2px solid ${color}` : ''};transform:translateX(${speed})`"></i>
        </div>
        
        <!-- 活动信息 -->
        <ul class="products" v-if="listData[active] && listData[active].length">
            <li v-for="(val,key) in listData[active]" :key="key">
-               <div class="item" @click="handleJumpUrl(val.id)">
+               <div class="item" @click="handleJumpUrl(val.id,val.is_buy_first)">
                    <div class="img" :style="`background-image:url(${val.activity_img})`"></div>
                    <div class="desc">
                        <div class="name">{{val.activity_title}}</div>
@@ -29,7 +29,7 @@
        </ul>
        <!-- 空数据默认样式 -->
        <div class="tips" v-show="listData[active] && !listData[active].length">
-           <img :src="'../static/images/' + tipsImg[active]" alt="">
+           <img :src="tipsImg[active]" alt="">
            <div>暂无活动</div>
        </div>
        <!-- banner -->
@@ -69,9 +69,9 @@ export default {
             active:0, //默认选中的分类
             listData:[], //活动数据
             tipsImg:[ //空数据默认图片显示
-                'action.jpg',
-                'notBegun.jpg',
-                'over.jpg'
+                require('../../../static/images/action.jpg'),
+                require('../../../static/images/notBegun.jpg'),
+                require('../../../static/images/over.jpg')
             ],
             speed:0,
             current:0,
@@ -107,8 +107,12 @@ export default {
 
            this.speed = site + 'px'
         },
-        //路由跳转
-        handleJumpUrl(id)
+        /**
+         * 路由跳转
+         * @param id [int|string] 活动ID
+         * @param isBuy [string] 判断该活动是否需要购买商品才可参与
+         */
+        handleJumpUrl(id,isBuy)
         {
             if(this.$route.params.isInner) this.handleRemove('ActivityList')
             let isCache = this.$route.params.isInner ? {'isCache':false} : {}
@@ -121,6 +125,7 @@ export default {
                 name:'ActivityList',
                 params:{
                     id,
+                    isBuy,
                     ...isCache
                 }
             })
@@ -133,7 +138,8 @@ export default {
     computed:{
         ...mapState([
         'tabbarList',
-        'color'
+        'color',
+        'weChat'
         ])
     }
 }
