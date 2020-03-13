@@ -7,6 +7,10 @@ import store from './store'
 import {getUserInfo} from './utils/common'
 import 'lib-flexible/flexible'
 import 'animate.css'
+import {getWxConfig} from './utils/wxShare'
+
+// 初始化微信分享
+getWxConfig()
 
 //图片预览
 import preview from 'vue-photo-preview'

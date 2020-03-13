@@ -6,7 +6,7 @@
       <div class="rank_info" :style="`background-color:${$store.state.color}`">
         <!-- <div v-show="isTimeOut" class="isTimeOut">已结束</div>
         <div v-show="!isTimeOut" class="isTime">拒结束：16天03时02分10秒</div> -->
-        <img src="/static/images/pf.png" alt />
+        <img src="../../../static/images/pf.png" alt />
         <!-- 梯形 -->
         <ul class="trapezoid">
           <li v-for="(val, key) in rank" :key="key"> 
@@ -136,10 +136,12 @@ export default {
             {
                 let imgUrl = val.portrait.indexOf('http') != -1 ? val.portrait : 'http:' + val.portrait;
                 let a_title = sessionStorage.getItem('a_title') || '投票';
+                // let url = window.location.href.split('#')[0] + '#/ActivityDetail'
+                let url = 'http://www.dusun.com.cn/openVote.do#/ActivityDetail';
                 this.shareParam = {
                   title : '大尚国际-投票活动', // 分享标题
                   desc : `我正在参加${a_title}活动，快来帮我投一票吧！`, // 分享描述
-                  link : `http://www.dusun.com.cn/openVote.do#/ActivityDetail?activity_id=${val.activity_id}&id=${val.id}&isBuy=${sessionStorage.getItem('isBuy')}&isShare=true`, // 分享链接
+                  link : `${url}?activity_id=${val.activity_id}&id=${val.id}&isBuy=${sessionStorage.getItem('isBuy')}&isShare=true`, // 分享链接
                   imgUrl, // 分享图标
                 }
             }
@@ -148,9 +150,9 @@ export default {
         // this.listMap.getRankingList = [];
         if (this.listMap.getRankingList.length) {
           let imgs = [
-            "./static/images/one.png",
-            "./static/images/two.png",
-            "./static/images/three.png"
+            require("../../../static/images/one.png"),
+            require("../../../static/images/two.png"),
+            require("../../../static/images/three.png")
           ];
           // 处理前三名的数据
           for (let i = 0; i < 3; i++) {
