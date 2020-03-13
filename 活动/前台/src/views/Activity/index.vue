@@ -24,6 +24,7 @@
                            结束时间：{{val.end_time.split(' ')[0]}}
                        </div>
                    </div>
+                   <!-- <div class="tips_text">已参加</div> -->
                </div>
            </li>
        </ul>

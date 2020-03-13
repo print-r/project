@@ -274,7 +274,7 @@ export default {
         // 收货地址跳转
         handleJumpAddress()
         {
-            window.location.href = process.env.NODE_ENV == 'production' ? process.env.BASE_API + 'address_mobileIndex.do' : 'http://localhost' + process.env.BASE_API + '/address_mobileIndex.do'
+            window.location.href = process.env.NODE_ENV == 'production' ? process.env.BASE_API + '/address_mobileIndex.do' : 'http://localhost' + process.env.BASE_API + '/address_mobileIndex.do'
         },
 
         checkOrder(){
