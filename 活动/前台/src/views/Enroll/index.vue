@@ -296,7 +296,7 @@ export default {
                 return
             }
             //跳转
-            this.$router.replace({
+            this.$router.push({
                 name:'Cropper',
                 params:{
                     ...id,

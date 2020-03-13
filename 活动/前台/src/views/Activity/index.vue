@@ -87,7 +87,7 @@ export default {
         //获取数据
         handleGetData()
         {
-            let mid = this.$getUserInfo().mid
+            let mid = this.$getUserInfo().mid;
             let params = mid ? {mapStr:JSON.stringify({mid})} : '';
             getActivityData(params).then( res => {
                 let name = [2,1,3]
