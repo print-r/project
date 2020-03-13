@@ -24,7 +24,7 @@
                            结束时间：{{val.end_time.split(' ')[0]}}
                        </div>
                    </div>
-                   <!-- <div class="tips_text">已参加</div> -->
+                   <div class="tips_text" v-if="val.canyu == 1">已参加</div>
                </div>
            </li>
        </ul>
@@ -87,7 +87,9 @@ export default {
         //获取数据
         handleGetData()
         {
-            getActivityData().then( res => {
+            let mid = this.$getUserInfo().mid
+            let params = mid ? {mapStr:JSON.stringify({mid})} : '';
+            getActivityData(params).then( res => {
                 let name = [2,1,3]
                 for(var i = 0; i < 3; i++)
                 {
