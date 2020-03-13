@@ -156,7 +156,7 @@ export default {
     .arrow
     {
         position: fixed;
-        right: 40px;
+        right: 45px;
         top: 15.15px;
 
         width: 116px;
