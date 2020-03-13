@@ -55,8 +55,8 @@ const state = {
         }
     ],
     previewOptions:{ //图片预览插件配置
-        fullscreenEl:false, //关闭全屏按钮
-        loop:false, // 关闭无缝预览
+        fullscreenEl:false, //全屏按钮
+        loop:false, // 无缝预览
     },
     weChat:handleCheckWeiXin(), // 判断是否为微信浏览器
 }

@@ -8,7 +8,7 @@ export const getWxConfig =  () => {
         title : '大尚国际-投票活动', // 分享标题
         desc : '快来参加投票活动吧，可以赢取丰厚的奖品哦！', // 分享描述
         link : window.location.href.split('#')[0], // 分享链接
-        imgUrl:'../../static/images/logo.png', // 分享图标
+        imgUrl:require('../../static/images/logo.png'), // 分享图标
     }
     let formData = new FormData();
     // TODO:获取微信签名的url只能用window.location.href,手写的都不行
