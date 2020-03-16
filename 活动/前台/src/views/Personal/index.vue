@@ -103,23 +103,21 @@
             </ul>
             <!-- 中奖信息 -->
              <ul class="list_info" v-show="active">
-                <li v-for="(val,key) in list[active]" :key="key">
-                    <router-link to="">
-                        <div class="name">
-                            {{val.activity_title}}<span class="tips zj">已中奖</span>
+                <li v-for="(val,key) in list[active]" :key="key" @click="checkOrder">
+                    <div class="name">
+                        {{val.activity_title}}<span class="tips zj">已中奖</span>
+                    </div>
+                    <div class="rank">
+                        <div class="rank_info color_6">
+                            <span>{{val.winning_note}}</span>
                         </div>
-                        <div class="rank">
-                            <div class="rank_info color_6">
-                                <span>{{val.winning_note}}</span>
-                            </div>
-                            <div class="iconfont icon">
-                                <span>去付款</span><i class="icon-you1"></i>
-                            </div>
+                        <div class="iconfont icon">
+                            <span>去付款</span><i class="icon-you1"></i>
                         </div>
-                        <div class="end_time">
-                            点击立即付款即可生成订单
-                        </div>
-                    </router-link>
+                    </div>
+                    <div class="end_time">
+                        点击立即付款即可生成订单
+                    </div>
                 </li>
             </ul>
             <div class="not_tips" v-if="list[active] && list[active].length <= 0">
@@ -278,10 +276,11 @@ export default {
         },
 
         checkOrder(){
-             window.location.href = process.env.NODE_ENV == 'production' ? process.env.BASE_API + 'order_index.do?url=form_mobile/myDuSun/order/index.jsp&handle_status=0' : 'http://localhost:8080' + process.env.BASE_API + '/order_index.do?url=form_mobile/myDuSun/order/index.jsp&handle_status=0'
+             window.location.href = process.env.NODE_ENV == 'production' ? process.env.BASE_API + '/order_index.do?url=form_mobile/myDuSun/order/index.jsp&handle_status=0' : 'http://localhost' + process.env.BASE_API + '/order_index.do?url=form_mobile/myDuSun/order/index.jsp&handle_status=0'
+             
         },
         checkOrderAll(){
-            window.location.href = process.env.NODE_ENV == 'production' ? process.env.BASE_API + 'order_index.do?url=form_mobile/myDuSun/order/index.jsp&handle_status=all' : 'http://localhost:8080' + process.env.BASE_API + '/order_index.do?url=form_mobile/myDuSun/order/index.jsp&handle_status=all'
+            window.location.href = process.env.NODE_ENV == 'production' ? process.env.BASE_API + '/order_index.do?url=form_mobile/myDuSun/order/index.jsp&handle_status=all' : 'http://localhost' + process.env.BASE_API + '/order_index.do?url=form_mobile/myDuSun/order/index.jsp&handle_status=all'
         },
         
         // // 生成订单

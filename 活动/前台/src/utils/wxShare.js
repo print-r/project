@@ -11,7 +11,7 @@ export const getWxConfig =  () => {
         imgUrl:require('../../static/images/logo.png'), // 分享图标
     }
     let formData = new FormData();
-    // TODO:获取微信签名的url只能用window.location.href,手写的都不行
+    // TODO:获取微信签名的url只能用window.location.href
     formData.append('url',params.link)
     getAppid(formData).then( res => {
         wx.config({

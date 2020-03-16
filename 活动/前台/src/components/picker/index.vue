@@ -35,19 +35,15 @@ export default {
         },
         province_id(id)
         {   
-            try{
-                this.slots[1].values = this.region.cityList.filter( val => {
-                    return id == val.parentid
-                })
-            }catch(e){}
+            this.slots[1].values = this.region.cityList.filter( val => {
+                return id == val.parentid
+            })
         },
         city_id(id)
         {
-            try{
-                this.slots[2].values = this.region.areaList.filter( val => {
-                    return id == val.parentid
-                })
-            }catch(e){}
+            this.slots[2].values = this.region.areaList.filter( val => {
+                return id == val.parentid
+            })
         }
     },
     data(){
@@ -92,6 +88,7 @@ export default {
         //设置地区数据
         handleSetRegion()
         {
+            if(this.region.length == 0) return
             //参数
             let params = ['provinceList','cityList','areaList']
             let defaultParams = ['pid','cid','aid']
@@ -104,11 +101,9 @@ export default {
                 //数据筛选
                 if(i > 0)
                 {
-                    try{
-                        this.slots[i].values = this.region[params[i]].filter( val => {
-                            return this.slots[ i - 1].values[index || 0].id == val.parentid
-                        })
-                    }catch(e){}
+                    this.slots[i].values = this.region[params[i]].filter( val => {
+                        return this.slots[ i - 1].values[index || 0].id == val.parentid
+                    })
                 }else
                 {
                     this.slots[i].values = this.region[params[i]]
@@ -188,6 +183,8 @@ export default {
         if(region && time <= 1)
         {
             this.region =  JSON.parse(region).data
+            //初始化地区
+            this.handleSetRegion()
         }else
         {
             //获取地区
@@ -203,8 +200,7 @@ export default {
                 this.handleSetRegion()
             })
         }
-        //初始化地区
-        this.handleSetRegion()
+        
     }
 }
 </script>

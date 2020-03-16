@@ -235,6 +235,8 @@ export default {
                     this.list.status.voteStatus = true
                     //弹框
                     this.voteSuccess = true
+                    // 清除活动列表缓存
+                    this.handleRemove('ActivityList')
                 }else
                 {
                     //投票失败

@@ -24,6 +24,7 @@
 </template>
 
 <script>
+let _this = null;
 import Clipboard from 'clipboard'
 import {wxShare} from '@/utils/wxShare'
 import {mapState} from 'vuex'
@@ -117,7 +118,6 @@ export default {
         // 复制
         handleCopy()
         {
-            let _this = this
             let flag = false
             // this.clipboard.on('success', e => {
             //      _this.$layer.alert('链接复制成功，快去粘贴吧')
@@ -132,7 +132,7 @@ export default {
                 _this.clipboard.destroy()
             })
 
-            if(!flag) _this.$layer.alert('链接复制成功，快去粘贴吧')
+            if(!flag) _this.$layer.alert('链接复制成功，快去粘贴分享吧')
         }
     },
     computed:{
@@ -141,7 +141,7 @@ export default {
         ])
     },
     mounted(){
-        let _this = this
+        _this = this
         // 初始化复制插件
         this.clipboard = new Clipboard('.wxShare',{
             text: function () {

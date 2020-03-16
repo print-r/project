@@ -496,8 +496,12 @@ export default {
             handleJoinActivity({
                 mapStr:JSON.stringify(data)
             }).then( res => {
-                //清除个人中心缓存
-                this.handleRemove('Personal')
+                //清除活动列表、个人中心缓存
+                let list = ['Activity','Personal']
+
+                list.forEach( val => {
+                    this.handleRemove(val)
+                })
                 this.$router.push({
                     path:'/SuccessEnroll'
                 })
