@@ -83,7 +83,7 @@ export default {
     return {
       isJoin: true,
       isOver: false,
-      activityId: sessionStorage.getItem("activityId"),
+      activityId: '',
       mid: this.$getUserInfo().mid,
       listMap: [],
       rank: [],
@@ -95,6 +95,18 @@ export default {
     };
   },
   mounted() {
+    if(this.$route.query.id && this.$route.query.isBuy)
+    {
+        this.activity_id = this.$route.query.id;
+        sessionStorage.setItem('activityId',this.activity_id);
+        sessionStorage.setItem('isBuy',this.$route.query.isBuy)
+    }else
+    {
+        this.$layer.alert('参数有误',() => { this.$router.replace({
+            path:'/Activity'
+        })});
+        return
+    }
     // 获取元素
     this.$nextTick(()=>{
        this.dateEl = {
@@ -104,11 +116,6 @@ export default {
         s:document.querySelector('.s')
       }
     })
-    if (!sessionStorage.getItem("activityId")) {
-      this.$layer.alert("参数错误", () => {
-        this.$router.go(-1);
-      });
-    }
     this.getInit();
   },
   methods: {
@@ -120,6 +127,7 @@ export default {
           pageNum: "0"
         })
       }).then(res => {
+
         this.listMap = res.data;
         
         this.isJoin =
@@ -170,6 +178,7 @@ export default {
           this.rank[0] = arr;
         } else {
           this.isShow = false;
+          return
         }
          /* 解决ios时间乱码兼容 */
         res.data.mapRankingTime.start_time = res.data.mapRankingTime.start_time.replace(/\-/g, "/")

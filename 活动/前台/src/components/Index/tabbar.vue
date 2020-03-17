@@ -2,7 +2,7 @@
     <div>
         <footer class="iconfont">
             <ul>
-                <li v-for="(val,key) in list.data" :key="key" :class="{active:$route.name == val.url && list.data.length <= 2}" :style="`color:${$route.name == val.url && list.data.length >= 5 ? $store.state.color : ''};width:${100 / list.data.length}%`">
+                <li v-for="(val,key) in list.data" :key="key" :class="{active:$route.name == val.url && list.data.length <= 2}" :style="`color:${$route.name == val.url && list.data.length >= 5 ? $store.state.color || active_color : ''};width:${100 / list.data.length}%`">
                     <div class="item" @click="handleJumpUrl(val.url,val.isInner)">
                         <i :class="val.icon" ></i>
                         <div class="text">{{val.name}}</div>
@@ -21,6 +21,11 @@ export default {
             default:{}
         }
     },
+    data(){
+        return{
+            active_color:sessionStorage.getItem('active_color')
+        }
+    },
     methods:{
         handleJumpUrl(url,params){
             //防止重复访问
@@ -28,14 +33,17 @@ export default {
             {
                 return
             }
+            let routes = ['ActivityList','RankingList','ActivityIntro']
             //跳转方式
-            let mode = this.list.data.length >= 5 ? 'replace': 'push'
+            let mode = this.list.data.length >= 5 ? 'replace': 'push'   
+            let query = routes.indexOf(url) != -1 ? {id:sessionStorage.getItem('activityId'),isBuy:sessionStorage.getItem('isBuy')} : {}
             //路由跳转
             this.$router[mode]({
                 name:url,
                 params:{
                     isInner:params || false
-                }
+                },
+                query:query
             })
         },
     }

@@ -147,6 +147,7 @@ router.beforeEach((to, from, next) => {
   {
     mode = 'handleAdd'
   }
+
   //清除缓存
   if(to.params.isCache === false) mode = 'handleRemove'
 

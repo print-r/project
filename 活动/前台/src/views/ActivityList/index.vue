@@ -1,12 +1,12 @@
 <template>
-    <div class="act_list" :class="{join:!isJoin}">
+    <div class="act_list" :class="{join:!isJoin}" v-show="isShow">
         <top :title="title"/>
         <div class="bg">
             <img :src="activityImg" alt="">
             <!-- 查看奖品 -->
             <div class="lookProduct" @click="handleJumpUrl"></div>
             <!-- 查看活动介绍 -->
-            <router-link :to="{name:'ActivityIntro',params:{active:1}}" class="lookIntro" replace></router-link>
+            <router-link :to="{name:'ActivityIntro',params:{active:1},query:{id,isBuy}}" class="lookIntro" replace></router-link>
         </div>
         <div class="end_time" :style="`background-color:${color}`">
             <div v-if="!isOver" class="time" >
@@ -108,13 +108,14 @@ export default {
             list:[], // 数据
             keyWord:'', //保存搜索框数据
             dateEl:{}, // 倒计时元素
+            isShow:false,
             isOver:false, //活动状态
             isOpen:false, //弹窗
             isJoin:true, //用户是否参与
             isStart:false, //判断活动是否开始
             productUrl:'', //商品地址
             bannerSlot:10, // 商品楼层广告插入
-            isBuy:sessionStorage.getItem('isBuy'), // 后台需要的参数
+            isBuy:'', // 后台需要的参数
             product_id:0, // 商品ID
             sign:'', // 活动参与状态
             joinPopup:false, // 参赛弹窗
@@ -138,6 +139,17 @@ export default {
                     is_buy_first
                 })
             }).then( res => {
+                // 判断url参数是否被改变
+                if(this.isBuy != res.data.ListVoteIndex[0].is_buy_first)
+                {
+                    this.$layer.alert('参数有误',() => {
+                        this.$router.replace({
+                            path:'/Activity'
+                        })
+                    })
+                    return
+                }
+                this.isShow = true
                 //标题
                 this.title = res.data.ListVoteIndex[0].activity_title
                 //保存标题（分享需要用到）
@@ -268,22 +280,40 @@ export default {
                 location.href = process.env.NODE_ENV == 'production' ? `${process.env.BASE_API}/ds-${productId[0]}.html` : `http://localhost${process.env.BASE_API}/ds-${productId[0]}.html`
             }else
             {
+                let query = {
+                    id:this.id,
+                    isBuy:this.isBuy
+                }
                 //跳转奖品介绍
                 this.$router.replace({
                     name:'ActivityIntro',
                     params:{
                         active:0
-                    }
+                    },
+                    query:query
                 })
             }
         },
     },
     mounted(){
         // 保存活动参与规则
-        if(this.$route.params.isBuy) sessionStorage.setItem('isBuy',this.$route.params.isBuy)
-        //保存活动列表id（防止页面刷新参数丢失）
-        if(this.$route.params.id) sessionStorage.setItem('activityId',this.$route.params.id)
-        this.id = this.$route.params.id || sessionStorage.getItem('activityId')
+        if(this.$route.query.isBuy)
+        {       
+            this.isBuy = this.$route.query.isBuy
+            sessionStorage.setItem('isBuy',this.$route.query.isBuy)
+        } 
+        //保存活动列表id
+        if(this.$route.query.id) sessionStorage.setItem('activityId',this.$route.query.id)
+        this.id = this.$route.query.id
+        if(!this.isBuy || !this.id || isNaN(this.id))
+        {
+            this.$layer.alert('参数有误',() => {
+                this.$router.replace({
+                    path:'/Activity'
+                })
+            })
+            return
+        }
         //获取数据
         this.handleGetData()
         // 获取元素

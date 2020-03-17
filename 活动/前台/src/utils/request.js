@@ -22,6 +22,7 @@ HTTP.interceptors.response.use(
     if(res['ListVoteIndex'] || res['activity_color'] || res['mapRankingTime'] || res['mapDetailed'])
     {
       let color = res['activity_color'] || (res['mapRankingTime'] && res['mapRankingTime'].activity_color)  || (res['ListVoteIndex'] && res['ListVoteIndex'][0].activity_color) || (res['mapDetailed'] && res['mapDetailed'].activity_color)
+      if(color) sessionStorage.setItem('active_color',color)
       //保存主题色
       _this.$store._mutations.handleSetColor[0](color)
     }

@@ -41,7 +41,7 @@ export default {
     data(){
         return{
             active:0,
-            activity_id:sessionStorage.getItem('activityId'),
+            activity_id:'',
             listMap:[],
             speed:0,
         }
@@ -70,7 +70,18 @@ export default {
         }
     },
     mounted(){
-       if(!this.activity_id) this.$layer.alert('参数有误',() => { this.$router.go(-1)});
+       if(this.$route.query.id && this.$route.query.isBuy)
+       {
+           this.activity_id = this.$route.query.id;
+           sessionStorage.setItem('activityId',this.activity_id);
+           sessionStorage.setItem('isBuy',this.$route.query.isBuy)
+       }else
+       {
+           this.$layer.alert('参数有误',() => { this.$router.replace({
+               path:'/Activity'
+           })});
+           return
+       }
        this.getInit();
        this.handleChange('0')
     },
