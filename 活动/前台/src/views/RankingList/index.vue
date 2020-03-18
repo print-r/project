@@ -97,8 +97,8 @@ export default {
   mounted() {
     if(this.$route.query.id && this.$route.query.isBuy)
     {
-        this.activity_id = this.$route.query.id;
-        sessionStorage.setItem('activityId',this.activity_id);
+        this.activityId = this.$route.query.id;
+        sessionStorage.setItem('activityId',this.activityId);
         sessionStorage.setItem('isBuy',this.$route.query.isBuy)
     }else
     {

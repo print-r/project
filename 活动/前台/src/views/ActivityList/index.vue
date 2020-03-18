@@ -220,7 +220,7 @@ export default {
         handleCountDown(time,end_time,isJoin)
         {
             this.handleSetTime(time)
-
+            
             let timer = setInterval(() => {
                 if(Date.now() >= new Date(time).getTime())
                 {
