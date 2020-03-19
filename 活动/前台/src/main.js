@@ -10,7 +10,7 @@ import 'animate.css'
 import {getWxConfig} from './utils/wxShare'
 
 // 初始化微信分享
-if(process.env.NODE_ENV == 'production') getWxConfig()
+if(process.env.NODE_ENV == 'production' && store.state.weChat) getWxConfig()
 
 //图片预览
 import preview from 'vue-photo-preview'
