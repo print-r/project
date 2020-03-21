@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import {getUserInfo} from '../utils/common'
+//导入
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 const _import = require('./_import_' + process.env.NODE_ENV)
 Vue.use(Router)
 
@@ -125,7 +128,7 @@ router.beforeEach((to, from, next) => {
     router.go(-1);
     return
   }
-
+  NProgress.start()
   try{
     //登录验证
     if(!getUserInfo().mid && to.meta.isLogin)
@@ -156,5 +159,9 @@ router.beforeEach((to, from, next) => {
   })
   next()
 })
+
+router.afterEach(() => {
+  NProgress.done()
+}) 
 
 export default router

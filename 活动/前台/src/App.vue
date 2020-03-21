@@ -43,4 +43,9 @@ export default {
     padding-top: 108px;
   }
 }
+
+// 进度条颜色
+#nprogress .bar {
+  // background: green !important; //自定义颜色
+}
 </style>
