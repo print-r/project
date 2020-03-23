@@ -26,21 +26,22 @@ export default {
     },
     methods:{
         handleGoBack(){
-
             if(!this.isGoBack)
             {
                 window.location.href = 'http://www.dusun.com.cn/';
                 return
             }
-            
             if(this.$route.name == 'Cropper')
             {
                 this.$router.replace({
                    path:'/Enroll',
                })
                return
-            }else if(this.$route.name == 'Activity')
+            }else if(this.$route.name == 'Activity' || this.$route.name == 'Personal')
             {
+                this.$router.replace({
+                    name:'Activity'
+                }).catch(err => {err})
                 this.$emit('update:isGoBack',false)
                 this.$emit('update:current',0)
                 return
@@ -53,8 +54,23 @@ export default {
                     }
                 })
                 return
+            }else if(this.$route.name == 'ActivityList' || this.$route.name == 'RankingList' || this.$route.name == 'ActivityIntro')
+            {
+                this.$router.replace({
+                    path:'/Activity',
+                })
+                return
+            }else if(this.$route.name == 'ActivityDetail' && this.$route.query.isBuy)
+            {
+                this.$router.replace({
+                    path:'/ActivityList',
+                    query:{
+                        id:this.$route.query.activity_id,
+                        isBuy:this.$route.query.isBuy
+                    }
+                })
+                return
             }
-            
             this.$router.go(-1)
         }
     },

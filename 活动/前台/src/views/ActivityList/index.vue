@@ -42,7 +42,7 @@
                             <img src="../../../static/images/zp1.png" alt="">
                         </a>
                     </div>
-                    <router-link v-if="key != bannerSlot" :to="{path:'/ActivityDetail',query:{activity_id:id,id:val.enroll_id}}">
+                    <router-link v-if="key != bannerSlot" :to="{path:'/ActivityDetail',query:{activity_id:id,id:val.enroll_id,isBuy}}">
                         <div class="img">
                             <img :src="val.portrait" alt="">
                             <div class="tips" :style="`background-color:${color}`">{{val.enroll_id}}号</div>

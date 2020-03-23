@@ -7,7 +7,7 @@
                     <div class="over_btn">
                     <div @click="handleHidePopup">确定</div>
                     <div>
-                        <router-link :to="{path:'/Index/activity'}">更多活动</router-link>
+                        <router-link :to="{name:'Activity',params:{isInner:false,active:0}}">更多活动</router-link>
                     </div>
                 </div>
             </div>

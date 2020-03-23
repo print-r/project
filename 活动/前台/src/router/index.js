@@ -152,7 +152,7 @@ router.beforeEach((to, from, next) => {
   }
 
   //清除缓存
-  if(to.params.isCache === false) mode = 'handleRemove'
+  if(to.query.isCache === false) mode = 'handleRemove'
 
   listName.forEach( val => {
     router.app.$options.store._mutations[mode][0](val)

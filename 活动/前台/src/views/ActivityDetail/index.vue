@@ -279,12 +279,18 @@ export default {
                     {
                         case 0:
                             //审核中
-                            this.$router.go(-1)
+                            this.$router.replace({
+                                path:'/ActivityList',
+                                query:{
+                                    id,
+                                    isBuy
+                                }
+                            });
                         break; 
                         case 1:
                             // 活动标题
                             let a_title = this.a_title
-                            let url = `${window.location.href}&isBuy=${sessionStorage.getItem('isBuy')}&isShare=true`;
+                            let url = `${window.location.href}&isShare=true`;
                             let imgUrl = this.list.portrait.indexOf('http') != -1 ? this.list.portrait : 'http:' + this.list.portrait;
                             //去拉票
                             this.shareParam = {
@@ -307,26 +313,15 @@ export default {
                     }
                 }else
                 {
-                    if(!this.list.status.disabled)
-                    {
-                        // 分享进来的
-                        if(this.$route.query.isShare)
-                        {
-                            let id = this.$route.query.activity_id
-                            let isBuy = this.$route.query.isBuy
-                            this.$router.replace({
-                                path:'/ActivityList',
-                                params:{
-                                    id,
-                                    isBuy
-                                }
-                            })
-                            return
+                    let id = this.$route.query.activity_id
+                    let isBuy = this.$route.query.isBuy
+                    this.$router.replace({
+                        path:'/ActivityList',
+                        query:{
+                            id,
+                            isBuy
                         }
-                        
-                    }
-
-                    this.$router.go(-1)
+                    })
                 }
             }
         },
