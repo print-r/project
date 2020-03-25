@@ -297,7 +297,7 @@ export default {
     },
     mounted(){
         // 保存活动参与规则
-        if(this.$route.query.isBuy)
+        if(this.$route.query.isBuy !== '')
         {       
             this.isBuy = this.$route.query.isBuy
             sessionStorage.setItem('isBuy',this.$route.query.isBuy)
@@ -305,7 +305,7 @@ export default {
         //保存活动列表id
         if(this.$route.query.id) sessionStorage.setItem('activityId',this.$route.query.id)
         this.id = this.$route.query.id
-        if(!this.isBuy || !this.id || isNaN(this.id))
+        if(this.isBuy === '' || !this.id || isNaN(this.id))
         {
             this.$layer.alert('参数有误',() => {
                 this.$router.replace({

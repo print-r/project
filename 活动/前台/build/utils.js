@@ -73,7 +73,10 @@ exports.cssLoaders = function (options) {
     {
       loader: 'sass-resources-loader',
       options: {
-        resources: path.resolve(__dirname, '../src/common/css/sass/variable.scss') //全局sass变量
+        //全局sass变量
+        resources: [
+          path.resolve(__dirname, '../src/common/css/sass/variable.scss')
+        ] 
       }
     }),
     stylus: generateLoaders('stylus'),

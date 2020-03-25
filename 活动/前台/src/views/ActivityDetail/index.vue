@@ -38,7 +38,7 @@
         </div>
          <!-- 参与 -->
         <div class="join wxShare">
-            <router-link v-if="!isOver && status != 0 && mid == list.mid" :to="{'path':'/ActivityList'}" replace class="iconfont icon-toupiaohuodong-toupiao" :style="`background-color:${$store.state.color}`"><span>投票</span></router-link>
+            <router-link v-if="!isOver && status != 0 && mid == list.mid" :to="{path:'/ActivityList',query:{id:$route.query.activity_id,isBuy:0}}" replace class="iconfont icon-toupiaohuodong-toupiao" :style="`background-color:${$store.state.color}`"><span>投票</span></router-link>
             <div v-if="list.status" class="text" :class="{disabled:list.status.disabled}" @click="handleJoin" :style="`background-color:${$store.state.color}`">
                 {{list.status.text}}
             </div>
@@ -329,12 +329,8 @@ export default {
         },
     },
     mounted(){
-        // 分享进来的
-        if(this.$route.query.isShare)
-        {
-            sessionStorage.setItem('isBuy',this.$route.query.isBuy)
-            sessionStorage.setItem('activityId',this.$route.query.activity_id)
-        }
+        if(this.$route.query.isBuy) sessionStorage.setItem('isBuy',this.$route.query.isBuy)
+        if(this.$route.query.activity_id) sessionStorage.setItem('activityId',this.$route.query.activity_id)
         //用户id
         this.mid = this.$getUserInfo().mid
 
