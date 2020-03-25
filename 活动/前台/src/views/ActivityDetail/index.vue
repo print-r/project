@@ -55,7 +55,7 @@
             </div>
             <div class="title_text">感谢您！投票成功</div>
             <div class="text">了解活动，参与投票得大奖</div>
-            <div class="btn" @click="$router.back(-1)">查看活动</div>
+            <router-link class="btn" replace :to="{path:'/ActivityList',query:{id:$route.query.activity_id,isBuy:$route.query.isBuy}}">查看活动</router-link>
         </div>
         <!-- 遮罩层 -->
         <div class="shade" v-if="voteSuccess"></div>
@@ -271,7 +271,11 @@ export default {
                 })
             }else
             {
-                let activity_id = this.$route.query.activity_id || sessionStorage.getItem('activity_id')
+                // 活动id
+                let id = this.$route.query.activity_id
+                // 活动参与状态
+                let isBuy = this.$route.query.isBuy
+
                 //判断是否自己参加的活动
                 if(this.mid == this.list.mid)
                 {
@@ -305,7 +309,7 @@ export default {
                             this.$router.push({
                                 path:'/Enroll',
                                 query:{
-                                    activity_id,
+                                    activity_id:id,
                                     id:this.list.id
                                 }
                             })
@@ -313,8 +317,6 @@ export default {
                     }
                 }else
                 {
-                    let id = this.$route.query.activity_id
-                    let isBuy = this.$route.query.isBuy
                     this.$router.replace({
                         path:'/ActivityList',
                         query:{
