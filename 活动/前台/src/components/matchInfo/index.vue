@@ -4,15 +4,15 @@
             <div class="left_icon">{{(listMap.id && listMap.rank) || '-' }}</div>
             <div class="center">
                 <div class="avatar">
-                    <img :src="(listMap.id && listMap.portrait) || $getUserInfo().img" alt="">
+                    <img :src=" $getUserInfo().mid ? (listMap.id && listMap.portrait) || $getUserInfo().img : require('../../../static/images/login.png')" alt="">
                 </div>
                 <div class="text">
-                    <div class="activity_tips"> {{ (listMap.id && 'ID：' + listMap.id)  || '您还没有参加活动~'}} </div>
+                    <div class="activity_tips"> {{ $getUserInfo().mid ? (listMap.id && 'ID：' + listMap.id)  || '您还没有参加活动~' : '您还未登录'}} </div>
                     <div class="not_votes">{{ (listMap.id && listMap.gain_votes + '票') || '暂无票数'}}</div>
                 </div>
             </div>
             <div class="right_btn wxShare" @click="handleJoin" :style="`background-color:${$store.state.color}`">
-                <div>{{listMap.id ? listMap.isOver ?'已结束':'拉助力' : '去参赛'}}</div>
+                <div>{{$getUserInfo().mid ? listMap.id ? listMap.isOver ?'已结束':'拉助力' : '去参赛' : '去登录'}}</div>
             </div>
         </div>
         <!-- 分享 -->
@@ -22,6 +22,7 @@
 
 <script>
 import wxShare from '@/components/wxShare/index.vue'
+import {handleJumpUrl} from '@/utils/common'
 export default {
     name:'matchInfo',
     components:{
@@ -61,33 +62,41 @@ export default {
     methods:{
         handleJoin()
         {
-            //未参赛
-            if(JSON.stringify(this.listMap) == '{}')
+            if(this.$getUserInfo().mid)
             {
-                // 需要购买商品才可参与活动
-                if(this.sign == '4')
+                 //未参赛
+                if(JSON.stringify(this.listMap) == '{}')
                 {
-                    // 显示弹窗
-                    this.$emit('update:joinPopup',true)
-                    return
-                }
-                this.$router.push({
-                    path:'/Enroll',
-                    query:{
-                        activity_id:this.$route.query.id || sessionStorage.getItem('activityId')
+                    // 需要购买商品才可参与活动
+                    if(this.sign == '4')
+                    {
+                        // 显示弹窗
+                        this.$emit('update:joinPopup',true)
+                        return
                     }
-                })
+                    this.$router.push({
+                        path:'/Enroll',
+                        query:{
+                            activity_id:this.$route.query.id || sessionStorage.getItem('activityId')
+                        }
+                    })
+                }else
+                {
+                    if(this.listMap.isOver)
+                    {
+                        this.$router.replace({
+                            path:'/Activity',
+                        })
+                    }else {
+                        this.shareData = Object.assign({},this.shareParam)
+                    }
+                }
             }else
             {
-                if(this.listMap.isOver)
-                {
-                    this.$router.replace({
-                        path:'/Activity',
-                    })
-                }else {
-                    this.shareData = Object.assign({},this.shareParam)
-                }
+                // 未登录
+                handleJumpUrl('login')
             }
+           
         }
     },
 }

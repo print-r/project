@@ -5,11 +5,11 @@
              <!-- 顶部 -->
             <div class="top">
                 <!-- 用户信息 -->
-                <div class="info">
+                <div class="info" @click="handleJumpUserInfo">
                     <div class="avatar">
-                        <img :src="$getUserInfo().img || 'http://www.dusun.com.cn/form/myDuSun/util/images/user_face_03.jpg'" alt="">
+                        <img :src="$getUserInfo().mid ? $getUserInfo().img || 'http://www.dusun.com.cn/form/myDuSun/util/images/user_face_03.jpg' : require('../../../static/images/login.png')" alt="">
                     </div>
-                    <span class="username">{{$getUserInfo().mn}}</span>
+                    <span class="username">{{$getUserInfo().mn || '您还未登录'}}</span>
                 </div>
                 <!-- 收货地址 -->
                 <div class="address" >
@@ -123,8 +123,9 @@
             <div class="not_tips" v-if="list[active] && list[active].length <= 0">
                 <img :src="tipsImg[active]" alt="">
                 <div class="text">
-                    <span>{{active == 0 ? '您还没有参加活动~' : '您还没有中奖'}}</span>
-                    <router-link :style="`color:${$route.params.isInner ? color : ''}`" :to="{path:'/Activity'}">去逛逛</router-link>
+                    <span>{{$getUserInfo().mid ? active == 0 ? '您还没有参加活动~' : '您还没有中奖' : '您还未登录'}}</span>
+                    <router-link v-if="$getUserInfo().mid" :style="`color:${$route.params.isInner ? color : ''}`" :to="{path:'/Activity'}">去逛逛</router-link>
+                    <a @click="handleJumpUserInfo" :style="`color:${$route.params.isInner ? color : ''}`" v-if="!$getUserInfo().mid">去登录</a>
                 </div>
             </div>
         </div>
@@ -139,6 +140,7 @@ import {getUserInfoData,getOrderCode} from '@/api/personal';
 import tabbar from '@/components/Index/tabbar.vue';
 import top from '@/components/Index/header.vue';
 import cache from '@/utils/cache'
+import {handleJumpUrl} from '@/utils/common'
 export default {
     name:'Personal',
     components:{
@@ -268,6 +270,19 @@ export default {
                     }
                })
            }
+        },
+        // 跳转个人信息
+        handleJumpUserInfo()
+        {
+            if(this.$getUserInfo().mid)
+            {
+                // 已登录
+                handleJumpUrl('userinfo');
+            }else
+            {
+                // 未登录
+                handleJumpUrl('login');
+            }
         },
         // 收货地址跳转
         handleJumpAddress()

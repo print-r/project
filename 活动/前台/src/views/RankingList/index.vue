@@ -49,9 +49,13 @@
     </div>
     <div class="rank_empty" v-if="!isShow">
       <img class="rank_empty_icon" src="../../../static/images/rank.jpg" />
-      <div class="tip">
+      <div class="tip" v-if="$getUserInfo().mid">
         正在统计中，赶快
         <span @click="sighUp()" style="color: #6795f8;">报名</span>中
+      </div>
+      <div class="tip" v-if="!$getUserInfo().mid">
+        您还未登录，赶快去
+        <span @click="sighUp()" style="color: #6795f8;">登录</span>吧
       </div>
       <div class="banner">
         <banner />
@@ -69,7 +73,7 @@ import top from "@/components/Index/header.vue";
 import matchInfo from "@/components/matchInfo/index.vue";
 import overPopup from "@/components/overPopup/index.vue";
 import banner from "@/components/banner/index.vue";
-import { countDown } from "@/utils/common";
+import { countDown,handleJumpUrl } from "@/utils/common";
 export default {
   name: "RankingList",
   components: {
@@ -217,6 +221,12 @@ export default {
       });
     },
     sighUp() {
+      // 未登录
+      if(!this.$getUserInfo().mid)
+      {
+        handleJumpUrl('login');
+        return
+      }
       if (this.isOver) {
         //活动结束
         this.$layer.alert("活动结束了");

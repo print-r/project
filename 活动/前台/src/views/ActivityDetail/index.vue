@@ -71,6 +71,7 @@ import banner from '@/components/banner/index.vue'
 import popup from '@/components/votePopup/index.vue'
 import wxShare from '@/components/wxShare/index.vue'
 import {getActivityDetailData,handleActionVote} from '@/api/activity'
+import {handleJumpUrl} from '@/utils/common'
 export default {
     name:'ActivityDetail',
     components:{
@@ -164,30 +165,39 @@ export default {
                         text = '活动已经结束，查看更多活动'
                     }else
                     {
-                        if(this.mid == this.list.mid)
+                        // 已登录
+                        if(this.mid)
                         {
-                            switch(this.list.state)
+                            // 判断是否为自己参与的活动
+                            if(this.mid == this.list.mid)
                             {
-                                case 0:
-                                    text = '审核中'
-                                    disabled = true
-                                break;  
-                                case 1:
-                                    text = '去拉票'
-                                break; 
-                                case 2:
-                                    text = '已驳回，重新提交'
-                                    disabled = true
-                                break;  
+                                switch(this.list.state)
+                                {
+                                    case 0:
+                                        text = '审核中'
+                                        disabled = true
+                                    break;  
+                                    case 1:
+                                        text = '去拉票'
+                                    break; 
+                                    case 2:
+                                        text = '已驳回，重新提交'
+                                        disabled = true
+                                    break;  
+                                }
+                            }else
+                            {
+                                //投票状态
+                                voteStatus = Boolean(~~res.data.signTime)
+                                //参与文字
+                                text = Boolean(~~res.data.sign) ? '返回活动页' : '我要参与'
+                                //参与状态
+                                // disabled = Boolean(~~res.data.sign)
                             }
                         }else
                         {
-                            //投票状态
-                            voteStatus = Boolean(~~res.data.signTime)
-                            //参与文字
-                            text = Boolean(~~res.data.sign) ? '返回活动页' : '我要参与'
-                            //参与状态
-                            // disabled = Boolean(~~res.data.sign)
+                            // 未登录
+                            text = '去登录'
                         }
                         
                     }
@@ -213,6 +223,12 @@ export default {
         //投票
         handleVote()
         {
+            // 未登录
+            if(!this.$getUserInfo().mid)
+            {
+                handleJumpUrl('login')
+                return
+            }
             //不可投票
             if(this.list.status.voteStatus) 
             {
@@ -271,6 +287,12 @@ export default {
                 })
             }else
             {
+                // 未登录
+                if(!this.mid)
+                {
+                    handleJumpUrl('login');
+                    return
+                }
                 // 活动id
                 let id = this.$route.query.activity_id
                 // 活动参与状态

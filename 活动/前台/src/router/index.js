@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import {getUserInfo} from '../utils/common'
+import {getUserInfo,handleJumpUrl} from '../utils/common'
 //导入
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
@@ -37,7 +37,7 @@ const router = new Router({
       meta:{
         title:'个人中心',
         keepAlive:true, //缓存
-        isLogin:true
+        isLogin:false
       }
     },
     {
@@ -47,7 +47,7 @@ const router = new Router({
       meta:{
         title:'活动',
         keepAlive:true, //缓存
-        isLogin:true
+        isLogin:false
       }
     },
     {
@@ -57,7 +57,7 @@ const router = new Router({
       meta:{
         title:'排行榜',
         keepAlive:true, //缓存
-        isLogin:true
+        isLogin:false
       }
     },
     {
@@ -67,7 +67,7 @@ const router = new Router({
       meta:{
         title:'活动介绍',
         keepAlive:true, //缓存
-        isLogin:true
+        isLogin:false
       }
     },
     {
@@ -77,7 +77,7 @@ const router = new Router({
       meta:{
         title:'详情',
         keepAlive:true, //缓存
-        isLogin:true
+        isLogin:false
       }
     },
     {
@@ -95,7 +95,7 @@ const router = new Router({
       name:'Cropper',
       component: _import('Cropper/index'),
       meta:{
-        title:'裁剪',
+        title:'图片裁剪',
         keepAlive:false, //不缓存
         isLogin:true
       }
@@ -133,8 +133,7 @@ router.beforeEach((to, from, next) => {
     //登录验证
     if(!getUserInfo().mid && to.meta.isLogin)
     {
-      let url = process.env.NODE_ENV == 'production' ? process.env.BASE_API : 'http://localhost' + process.env.BASE_API
-      window.location.href = url + '/userLogin_index.do'
+      handleJumpUrl('login');
       return
     }
   }catch(e){}

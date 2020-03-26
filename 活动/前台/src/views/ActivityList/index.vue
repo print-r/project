@@ -131,11 +131,13 @@ export default {
         {
             // 活动参与状态
             let is_buy_first = this.$route.params.isBuy || this.isBuy
+            // 用户id
+            let mid = this.$getUserInfo().mid ? {mid:this.$getUserInfo().mid} : {}
             //获取数据
             getActivityListData({
                 mapStr:JSON.stringify({
                     activity_id:this.id,
-                    mid:this.$getUserInfo().mid,
+                    ...mid,
                     is_buy_first
                 })
             }).then( res => {

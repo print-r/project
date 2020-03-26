@@ -83,3 +83,23 @@ export function handleCheckWeiXin()
 		return false;
 	}
 }
+
+/**
+ * 跳转外链
+ * @param {string} name [跳转名称]
+ */
+export function handleJumpUrl(path)
+{
+	let name = '';
+	switch(path.toLowerCase())
+	{
+		case 'login':
+			name = 'userLogin_index';
+		break;
+		case 'userinfo':
+			name = 'my_index';
+		break;
+	}
+	let url = process.env.NODE_ENV == 'production' ? process.env.BASE_API : 'http://localhost' + process.env.BASE_API
+    window.location.href = `${url}/${name}.do`;
+}
