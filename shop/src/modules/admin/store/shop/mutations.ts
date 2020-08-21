@@ -9,7 +9,7 @@ export interface IAddParams {
     data: MenuOption;
 }
 
-type SortType = 'up' | 'down';
+export type SortType = 'up' | 'down';
 
 export interface ISortParams {
     type?: SortType;

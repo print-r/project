@@ -70,7 +70,7 @@ import draggable from 'vuedraggable';
 import { MenuOption } from '@/types/menu';
 import { ReturnParams } from '@/abstract/menuUtils';
 import { ThemeOptions } from '@/types/theme';
-import { ISortParams, IAddParams, IEditParams } from '@/modules/admin/store/shop/mutations';
+import { ISortParams, IAddParams, IEditParams, SortType } from '@/modules/admin/store/shop/mutations';
 
 interface MenuData {
     index: number;
@@ -202,7 +202,7 @@ export default class Pc extends Vue {
     }
 
      // 排序
-    private handleSort(type: string, index: number): void {
+    private handleSort(type: SortType, index: number): void {
         this.handleShopMenuSort({
             type,
             index,

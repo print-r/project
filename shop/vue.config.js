@@ -3,7 +3,6 @@ const fs = require('fs');
 const env = process.env;
 // 打包的模块名称
 const projectname = process.argv[3];
-console.log(projectname);
 // 读取项目目录文件
 const modules = fs.readdirSync('./src/modules');
 // 验证打包项目模块名称
@@ -60,8 +59,6 @@ function entry()
     }
     return pages;
 }
-
-console.log(entry());
 
 // 打包存放路径
 const outputDir = projectname === 'app' ? '../../../../Dusun_mall/WebRoot/form/shop/' : '../shop_admin/';

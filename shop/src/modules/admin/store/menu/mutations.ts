@@ -46,7 +46,6 @@ export const mutations: MutationTree<MenuState> = {
         if (CommonState.mode === 'pc') {
             localStorage.setItem('theme', CommonState.theme);
         }
-        console.log(data);
         // 保存店铺数据
         this._mutations['shop/handleSaveShopMenuData'][0](JSON.parse(JSON.stringify(data)));
     },

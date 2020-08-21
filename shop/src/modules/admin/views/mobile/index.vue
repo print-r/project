@@ -73,7 +73,7 @@ import { MenuOption } from '@/types/menu';
 import { handleSetRem } from '@/utils/common';
 import { ReturnParams } from '@/abstract/menuUtils';
 import { PhoneSize } from '../../store/common/types';
-import { ISortParams, IAddParams, IEditParams } from '@/modules/admin/store/shop/mutations';
+import { ISortParams, IAddParams, IEditParams, SortType } from '@/modules/admin/store/shop/mutations';
 
 interface MenuData {
     index: number;
@@ -266,7 +266,7 @@ export default class Mobile extends Vue {
     }
 
     // 排序
-    private handleSort(type: string, index: number): void {
+    private handleSort(type: SortType, index: number): void {
         this.handleShopMenuSort({
             type,
             index,
