@@ -1,0 +1,197 @@
+@charset 'utf8';
+
+.aside_list
+{
+    height: 100%;
+
+    .item
+    {
+        padding: 0 .36em .79em;
+        
+        border-bottom: 1px solid #ccc;
+        
+        &:last-child
+        {
+            border-bottom: 0;
+        }
+
+        .title
+        {
+            display: flex;
+            align-items: center;
+
+            height: 1.94em;
+
+            color:#000;
+
+            span
+            {
+                font-size: .42em;
+            }
+        }
+
+        .menu
+        {
+            display: flex;
+            flex-wrap: wrap;
+
+            li
+            {
+                width: 50%;
+
+                text-align: center;
+
+                padding:0 .18em;
+                margin-bottom: .39em;
+
+                box-sizing: border-box;
+
+                cursor: pointer;
+
+                .row
+                {
+                    .img
+                    {
+                        padding: .15em .12em;
+
+                        box-sizing: border-box;
+
+                        img
+                        {
+                            width: pxToEm(98);
+                            height: pxToEm(60);
+                        }
+                    }
+
+                    .name
+                    {
+                        font-family:Microsoft YaHei;
+                        font-size: .42em;
+                        color: #666;
+                    }
+
+                    .radio
+                    {
+                        width: .48em;
+                        height: .48em;
+
+                        margin: .3em auto 0; 
+                    }
+                }
+
+            }
+        }
+
+    }
+    
+    .sub
+    {
+        .menu
+        {
+            li
+            {
+                cursor: move;
+
+                .row
+                {
+                    padding: 0.39em 0;
+                    
+                    .img
+                    {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+
+                        height: 1.82em;
+
+                        img
+                        {
+                            width: .67em;
+                            height: .73em;
+                        }
+                    }
+
+                    .text,.count
+                    {
+                        color: #666;
+                        font-size: .42em;
+                    }
+
+                    .count
+                    {
+                        font-size: 12px;
+
+                        margin-top: pxToEm(5);
+                    }
+                }
+            }
+        }
+        
+    }
+
+    .disabled
+    {
+        pointer-events: none;
+    }
+
+    .active
+    {
+        background-color: #EEEEEE;
+    }
+
+   
+}
+
+@mixin ghostCommon() {
+    &::after
+    {
+        position: relative;
+
+        display: block; 
+        content: var(--text);
+        clear: both;
+
+        color:blue;
+        font-size: pxToEm(18);
+
+       
+        height: 50px;
+        line-height: 50px;
+
+        opacity: 0.5;
+        background: rgba(135,206,235,1);
+        border: 2px dashed blue;
+
+        box-sizing: border-box;
+
+        z-index: 99;
+
+    }
+
+    img,div
+    {
+        display: none;
+    }
+}
+
+.ghost
+{
+    text-align: center;
+
+    width: pxToEm($layout);
+
+    margin: 0 auto pxToEm($pmb);
+
+    @include ghostCommon();
+
+}
+
+.ghost-mobile
+{
+    text-align: center;
+
+    margin-bottom: .2rem;
+
+    @include ghostCommon();
+
+}

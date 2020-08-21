@@ -1,0 +1,22 @@
+@charset 'utf8';
+
+.slide
+{
+    height: pxToEm(582);
+
+    margin-bottom: pxToEm($pmb);
+
+    .swiper-container
+    {
+        .swiper-slide
+        {
+           width: 100% !important;
+        }
+        
+        height: 100%;
+        img
+        {
+            height: pxToEm(582);
+        }
+    }
+}

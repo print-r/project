@@ -1,0 +1,21 @@
+body {
+  background-color: #f7f8fa;
+}
+
+.container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.container .aside {
+  width: 240px;
+  background-color: #fff;
+}
+
+.container .section {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+/*# sourceMappingURL=index.css.map */

@@ -1,0 +1,29 @@
+@charset 'utf8';
+
+.slide
+{
+   min-height: 3.44rem;
+   
+   margin-bottom: 0.2rem;
+
+   padding: 0 .24rem;
+
+   .slide_swiper,.seat
+   {
+      width: 100%;
+      
+      margin: 0 auto;
+
+      border-radius: .2rem;
+
+      // img
+      // {
+      //    height: 3.44rem;
+      // }
+
+      .swiper-pagination-bullets
+      {
+         bottom: 0 !important;
+      }
+   }
+}

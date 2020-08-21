@@ -1,0 +1,575 @@
+@charset 'utf8';
+
+$color: #fa3a3a;
+
+.top
+{
+    background-color: #f3f3f3;
+    
+    .head
+    {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        height: pxToEm(40);
+
+
+        .welcome
+        {
+            display: flex;
+            align-items: center;
+
+            height: 100%;
+
+            .text
+            {
+                font-size: pxToEm(14);
+            }
+
+            .sign,.register
+            {
+                margin-left: pxToEm(32);
+                margin-right: pxToEm(15);
+
+                cursor: pointer;
+
+                span
+                {
+                    font-size: 12px;
+                }
+            }
+
+            .sign
+            {
+                &:hover
+                {
+                    color: $color;
+                }
+            }
+
+            .register
+            {
+                color: $color;
+
+                margin: 0;
+
+                img
+                {
+                    display: inline-block;
+
+                    width: pxToEm(13);
+                    height: pxToEm(13);
+
+                    margin-left: 3px;
+
+                    vertical-align: baseline;
+                }
+            }
+
+            a
+            {
+                display: flex;
+
+                align-items: center;
+            }
+        }
+
+        .aside
+        {
+            height: 100%;
+
+            .aside_ul
+            {
+                display: flex;
+
+                height: 100%;
+
+                > li
+                {
+                    position: relative;
+
+                    text-align: center;
+
+                    cursor: pointer;
+
+                    a
+                    {
+                        font-size: 12px;
+                    }
+
+                    &:not(:first-child)
+                    {
+                        &:hover 
+                        {
+                            outline: 1px solid #eee;
+                            border-bottom: none;
+
+                            background-color: #fff;
+
+                            box-sizing: border-box;
+
+                            .icon-bottom
+                            {
+                                transform: scale(.86) rotate(-180deg);
+                            }
+                            
+                            .list
+                            {
+                                display: block;
+
+                                left: -1px;
+
+                                border: 1px solid #eee;
+                                border-top: none;
+                            }
+                        }
+                    }
+
+                    .item
+                    {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        width: 100%;
+                        height: 100%;
+
+                        padding: 0 pxToEm(12);
+
+                        box-sizing: border-box;
+
+                        span
+                        {
+                            font-size: 12px;
+                        }
+
+                        .icon-bottom
+                        {
+                            font-size: pxToEm(12);
+
+                            margin-left: pxToEm(6);
+
+                            transform: scale(.75);
+
+                            transition: .3s;
+                        }
+
+                        &:hover
+                        {
+                            color: $color;
+                        }
+                        
+                    }
+
+                    .list
+                    {
+                        position: absolute;
+                        left: 0;
+
+                        display: none;
+
+                        width: 100%;
+
+                        z-index: 2;
+
+                        background-color: #fff;
+
+                        .tel
+                        {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+
+                            height: pxToEm(38);
+
+                            span
+                            {
+                                font-size: 12px;
+                            }
+                        }
+
+                        .imgs
+                        {
+                            display: flex;
+                            justify-content: center;
+
+                            padding: pxToEm(10);
+
+                            box-sizing: border-box;
+
+                            img
+                            {
+                                width: 50%;
+
+                                &:first-child
+                                {
+                                    margin-right: pxToEm(5);
+                                }
+                            }
+                        }
+
+                        ul
+                        {
+                            background-color: #fff;
+
+                            li
+                            {
+                                cursor: pointer;
+
+                                padding-top: pxToEm(7);
+                                padding-bottom: pxToEm(12);
+
+                                a
+                                {
+                                    font-size: 12px;
+                                }
+
+                                &:hover
+                                {
+                                    color: $color;
+                                }
+
+                            }
+                        }
+                    }
+                    
+                }
+            }
+        }
+    }
+
+    .logo
+    {
+        height: pxToEm(121);
+
+        border:1px solid rgba(226,226,226,1);
+        border-left: none;
+        border-right: none;
+        
+        background-color: #fff;
+
+        .logo_content
+        {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            height: 100%;
+
+            padding: pxToEm(16);
+
+            box-sizing: border-box;
+            
+            .left
+            {
+                display: flex;
+                align-items: center;
+
+                height: 100%;
+
+                .logo_img
+                {
+
+                    width: pxToEm(164);
+                    height: pxToEm(54);
+
+                    padding-right: pxToEm(20);
+
+                    border-right: 1px solid #EEEEEE;
+                }
+
+                .shop_info
+                {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+
+                    height: pxToEm(54);
+                    
+                    padding-left: pxToEm(20);
+
+                    .shop_name
+                    {
+                        font-size: pxToEm(16);
+                        color: #000;
+                    }
+
+                    .shop_score
+                    {
+                        display: flex;
+
+                        .auth
+                        {
+                            width: pxToEm(56);
+                        }
+
+                        .star
+                        {
+                            display: flex;
+                            align-items: center;
+
+                            margin-left: pxToEm(10);
+                            margin-right: pxToEm(5);
+
+                            i
+                            {
+                                font-size: pxToEm(14);
+
+                                color: #FC3737;
+
+                                &:last-child
+                                {
+                                    color: #DEDEDE;
+                                }
+                            }
+                        }
+
+                        .score
+                        {
+                            display: flex;
+                            align-items: center;
+
+                            color: #A1A1A1;
+
+                            span
+                            {
+                                font-size: pxToEm(14);
+
+                                margin-top: 2px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .right
+            {
+                display: flex;
+
+                .search
+                {
+                    display: flex;
+
+                    height: pxToEm(40);
+
+                    border: 2px solid rgba(230,35,43,1);
+
+                    .input
+                    {
+                        display: flex;
+                        align-items: center;
+
+                        width: pxToEm(378);
+
+                        padding: pxToEm(15);
+
+                        color: #AAAAAA;
+
+                        i
+                        {
+                            font-size: pxToEm(16);
+
+                            margin-right: 3px;
+                        }
+
+                        input[type=text]
+                        {
+                            width: 100%;
+
+                            font-size: pxToEm(14);
+                            color: #AAAAAA;
+
+                            &::placeholder
+                            {
+                                color: #AAAAAA;
+                            }
+                        }
+                    }
+
+                    .search_btn
+                    {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        width: pxToEm(80);
+
+                        background-color: rgba(230,35,43,1);
+
+                        cursor: pointer;
+
+                        span
+                        {
+                            font-weight: 700;
+                            font-size: pxToEm(18);
+                            color: #fff;
+                        }
+                        
+                    }
+                }
+
+                .search_shop
+                {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    width: pxToEm(80);
+                    
+                    margin-left: 2px;
+
+                    background-color: #444;
+
+                    cursor: pointer;
+
+                    span
+                    {
+                        font-weight: 700;
+                        font-size: pxToEm(18);
+                        color: #fff;
+                    }
+                }
+            }
+        }
+        
+    }
+
+    .header_fixed
+    {
+        position: fixed;
+        top: 0;
+
+        display: none;
+
+        width: 100%;
+        height: pxToEm(60);
+
+        background-color: #fff;
+
+        border-bottom: 1px solid #ddd;
+
+        opacity: 0;
+
+        z-index: 10;
+
+        .fixed_content
+        {
+            display: flex;
+            justify-content: space-between;
+
+            padding: pxToEm(10) pxToEm(20);
+
+            box-sizing: border-box;
+            
+            .fixed_logo
+            {
+                width: pxToEm(120);
+            }
+
+            .fixed_search
+            {
+                display: flex;
+                align-items: center;
+                
+                .f_search_input
+                {
+                    display: flex;
+                    align-items: center;
+
+                    .search
+                    {
+                        display: flex;
+
+                        height: pxToEm(30);
+
+                        border: 2px solid rgba(230,35,43,1);
+
+                        .input
+                        {
+                            display: flex;
+                            align-items: center;
+
+                            width: pxToEm(378);
+
+                            padding: pxToEm(15);
+
+                            color: #AAAAAA;
+
+                            i
+                            {
+                                font-size: pxToEm(16);
+
+                                margin-right: 3px;
+                            }
+
+                            input[type=text]
+                            {
+                                width: 100%;
+
+                                font-size: pxToEm(14);
+                                color: #AAAAAA;
+
+                                &::placeholder
+                                {
+                                    color: #AAAAAA;
+                                }
+                            }
+                        }
+
+                        .search_btn
+                        {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+
+                            width: pxToEm(80);
+
+                            background-color: rgba(230,35,43,1);
+
+                            cursor: pointer;
+
+                            span
+                            {
+                                font-weight: 700;
+                                font-size: pxToEm(15);
+                                color: #fff;
+                            }
+                            
+                        }
+                    }
+
+                    .search_shop
+                    {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        width: pxToEm(80);
+                        height: pxToEm(34);
+                        
+                        margin-left: 2px;
+
+                        background-color: #444;
+
+                        cursor: pointer;
+
+                        span
+                        {
+                            font-weight: 700;
+                            font-size: pxToEm(15);
+                            color: #fff;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .op
+    {
+        display: block !important;
+        opacity: 1 !important;
+    }
+    
+}

@@ -1,0 +1,149 @@
+@charset "UTF-8";
+/*reset*/
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100%;
+  margin: 0 auto;
+}
+
+article, aside, dialog, footer, header, section, footer, nav, figure, menu {
+  display: block;
+}
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, figure, section, legend, textarea, p, blockquote, th, td, input, select, textarea, button {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font: 20px "Mic  rosoft Yahei",Arial,Helvetica,sans-serif;
+  color: #424242;
+  margin: 0 auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+ul, ol, dd, dt, dl {
+  list-style-type: none;
+}
+
+li
+{
+  list-style: none;
+}
+
+a {
+  color: #333;
+  text-decoration: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  color: inherit;
+  display: block;
+}
+
+a, input, select {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -webkit-border-radius: 0;
+}
+
+input, img {
+  border: none;
+  padding: 0;
+}
+
+i, em {
+  font-style: normal;
+}
+
+:focus {
+  outline: none;
+}
+
+img {
+  display: block;
+  width: 100%;
+  vertical-align: middle;
+}
+
+/*原子类*/
+.clear {
+  clear: both;
+}
+
+.clear:after {
+  display: block;
+  clear: both;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+
+/*placeholder css*/
+::-moz-placeholder {
+  font-family: "Microsoft YaHei";
+}
+
+::-webkit-input-placeholder {
+  font-family: "Microsoft YaHei";
+}
+
+::-ms-input-placeholder {
+  font-family: "Microsoft YaHei";
+}
+
+// 禁用手势
+.forbid
+{
+    cursor: not-allowed !important;
+}
+
+// 遮罩层
+.shade
+{
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba(0,0,0,.5);
+
+  box-sizing: border-box;
+
+  z-index: 99;
+}
+
+// 版口
+.layout
+{
+  display: block;
+  
+  width: pxToEm($layout);
+
+  margin: 0 auto;
+}

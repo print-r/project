@@ -1,0 +1,153 @@
+@charset 'utf8';
+
+.utils_slide
+{
+    width:  pxToEm(598);
+
+    padding: pxToEm(10) pxToEm(30) 0;
+    
+    box-sizing: border-box;
+
+    .tips
+    {
+        color: #000;
+
+        margin-bottom: pxToEm(28);
+
+        .tips_text
+        {
+            font-size: .42em;
+            color: #000;
+
+            padding: .94em 0;
+
+            .tips_icon
+            {
+                font-weight: 700;
+                color: #EE1616;
+
+                margin-left: .25em;
+            }
+        }
+
+        .tips_content
+        {
+            color: #999;
+
+            line-height: .61em;
+
+            span
+            {
+                font-size: pxToEm(14);
+            }
+        }
+    }
+
+    .slide_list
+    {
+        ul
+        {
+            display: flex;
+            flex-wrap: wrap;
+
+            li
+            {
+                cursor: move;
+
+                margin-right: pxToEm(22);
+
+                margin-bottom: pxToEm(22);
+
+                box-sizing: border-box;
+
+                &:nth-child(3n)
+                {
+                    margin-right: 0;
+                }
+
+                .item
+                {
+                    position: relative;
+
+                    width: pxToEm(164);
+                    height: pxToEm(80);
+
+                    img
+                    {
+                        width: 100%;
+                        height: 100%;
+                    }
+
+                    &:hover .del
+                    {
+                        display: block;
+                    }
+                }
+
+                .del
+                {
+                    position: absolute;
+                    top: 0;
+
+                    display: none;
+
+                    width: 100%;
+                    height: 100%;
+
+                    background: url('../../../../../assets/images/ite_trash.png') rgba(0,0,0,.6) no-repeat center;
+                }
+            }
+        }
+    }
+
+    .upload
+    {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        color: #666;
+
+        width: pxToEm(296);
+        height: pxToEm(40);
+
+        margin: 0 auto;
+        
+        background-color: rgb(244,244,244);
+
+        cursor: pointer;
+
+        .text
+        {
+            font-size: 12px;
+        }
+
+        .iconfont
+        {
+            font-size: 12px;
+            margin-right: .31em;
+        }
+    }
+    
+}
+
+input[type=file]
+{
+    display: none;
+}
+
+.ghost
+{
+    .item
+    {
+        outline: 1px solid red;
+    }
+}
+
+.dragClass
+{
+    .del
+    {
+        display: none !important;
+    }
+}

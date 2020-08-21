@@ -1,0 +1,234 @@
+@charset 'utf8';
+
+.mobile
+{
+    position: relative;
+
+    height: 100%;
+
+    padding: .64em 0 3.82em 5.91em;
+
+    overflow-y: auto;
+    overflow-x:hidden;
+
+    @include scrollStyle();
+
+    box-sizing: border-box;
+
+    .render_content
+    {
+        position: relative;
+
+        margin-left: .52em;
+
+        border:1px solid rgba(240, 240, 240, 0.66);
+        box-shadow:0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+
+    }
+
+    .menu_item
+    {
+        position: relative;
+
+        box-sizing: border-box;
+
+        z-index: 10;
+
+        .place
+        {
+            position: absolute;
+            top: 0;
+
+            width: 100%;
+            height: 100%;
+
+            cursor: move;
+
+            z-index: 9;
+
+            box-sizing: border-box;
+        }
+
+        .tips
+        {
+            pointer-events: none;
+
+            position: absolute;
+            top: 1px;
+            left: -40px;
+
+            color: #A2A2A2;
+
+            width: 0.91em;
+
+            padding: .3em .24em;
+
+            background: rgb(249,249,249);
+
+            border-radius: .45em;
+
+            box-sizing: border-box;
+
+            z-index: 1;
+
+
+            .text
+            {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                
+                font-size: .42em;
+            }
+
+        }
+
+        &:first-child,&:last-child 
+        {
+            .place
+            {
+                cursor: default;
+            }
+        }
+
+        .active
+        {
+            border: 2px solid #5395F5;
+        }
+    }
+
+    .utils_list
+    {
+        position: absolute;
+
+        display: flex;
+
+        
+        .handle
+        {
+            width: .79em;
+            height: 3.94em;
+
+            background-color: #fff;
+
+            ul
+            {
+                display: flex;
+                flex-direction: column;
+
+                height: 100%;
+
+                li
+                {
+                    flex: .8;
+
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    cursor: pointer;
+
+                    img
+                    {
+                        width: .48em;
+                    }
+
+                    &:first-child,&:last-child
+                    {
+                        flex: 1;
+                    }     
+
+                    &:last-child
+                    {
+                        border-top: 1px solid #E5E5E5;
+                    }
+                }
+            }
+
+        }
+
+        .utils
+        {
+            padding: pxToEm(15);
+
+            margin-left: 15px;
+
+            background-color: #fff;
+
+            .title
+            {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                padding-bottom: .58em;
+
+                border-bottom: 1px solid rgb(238,238,238);
+
+                span
+                {
+                    font-size: 12px;
+                    color: #999999;
+                }
+
+                i
+                {
+                    font-weight: 500;
+                    font-size: 0.42em;
+                    color: #787878;
+
+                    cursor: pointer;
+                }
+            }
+
+            .bottom
+            {
+                display: flex;
+                justify-content: flex-end;
+
+                margin-top: 1em;
+
+                .btn
+                {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    width: 1.76em;
+                    height: .85em;
+
+                    color: #5495F6;
+
+                    margin-right: .3em;
+
+                    border: 1px solid #5495F6;
+
+                    border-radius: 5px;
+
+                    cursor: pointer;
+
+                    span
+                    {
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+
+    }
+
+    .show
+    {
+        display: block !important;
+    }
+}
+
+
+.ghost
+{
+    .place
+    {
+        border: 2px solid #5395F5;
+    }
+}
+

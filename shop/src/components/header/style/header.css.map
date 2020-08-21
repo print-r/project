@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAEA,AAAA,OAAO,CACP;EACI,MAAM,EAAE,IAAI;EACZ,WAAW,EAAE,IAAI;EAEjB,SAAS,EAAE,IAAI;EAEf,KAAK,EAAC,IAAI;EACV,gBAAgB,EAAE,GAAG;EAErB,UAAU,EAAE,MAAM;CACrB",
+    "sources": [
+        "header.scss"
+    ],
+    "names": [],
+    "file": "header.css"
+}
