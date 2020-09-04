@@ -10,10 +10,6 @@ interface RequestOptions {
   params?: any;
 }
 
-/**
- * TODO:axios 请求配置，根据后台规则所有请求必须是POST请求，否则会请求失败
- */
-
 // 基准路径
 // const baseURL = process.env.NODE_ENV === 'production' ? process.env.VUE_APP_BASE_API : ''; 
 

@@ -82,7 +82,8 @@ export default class  extends Vue {
     @Watch('shopId')
     private changStatus(newVal: string, oldVal: string): void {
         if (newVal) {
-            let baseUrl = 'http://www.dusun.com.cn';
+            // 测试环境http://192.168.5.10:10002 ； 线上http://www.dusun.com.cn
+            let baseUrl = 'http://192.168.5.10:10002';
             if (process.env.NODE_ENV === 'development' || process.env.VUE_APP_LOCAL_TEST === 'true') {
                 baseUrl = `${process.env.VUE_APP_PREVIEW_IP}${process.env.VUE_APP_PROJECT}`;
             }

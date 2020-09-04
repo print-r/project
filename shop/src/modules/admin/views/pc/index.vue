@@ -70,7 +70,7 @@ import draggable from 'vuedraggable';
 import { MenuOption } from '@/types/menu';
 import { ReturnParams } from '@/abstract/menuUtils';
 import { ThemeOptions } from '@/types/theme';
-import { ISortParams, IAddParams, IEditParams, SortType } from '@/modules/admin/store/shop/mutations';
+import { ISortParams, IAddParams, IEditParams, SortType } from '@/modules/admin/store/shop/types';
 
 interface MenuData {
     index: number;

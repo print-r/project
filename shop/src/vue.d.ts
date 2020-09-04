@@ -3,6 +3,8 @@ declare module '*.vue' {
     export default Vue;
 }
 
+declare const $: any;
+
 declare module 'vue-awesome-swiper'
 declare module 'vue-cropper'
 declare module 'animate.css'

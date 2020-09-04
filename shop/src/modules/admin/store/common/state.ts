@@ -10,4 +10,5 @@ export const state: CommonState = {
     mid: '', // 商家ID
     dragStatus: false, // 拖拽状态
     isEdit: false, // 数据发生改变状态
+    showCateProduct: false, // 显示商品分类
 };

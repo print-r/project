@@ -1,6 +1,6 @@
 <template>
     <div class="header_name">
-        <top />
+        <top :isPreview="isPreview" />
         <div class="name" :style="`background-color:${navImg}`">
             <!-- <img :src="navImg" style="position: absolute; z-index: -1;"> -->
             <p :style="{color: nameColor, background: `url(${navImg}) 100% no-repeat`}">花妍丽化妆品专卖店</p>
@@ -12,7 +12,7 @@
                     v-for="(value,key) in dataList" 
                     :key="key" 
                     :class="key==n?'nav_active_w':''" 
-                    @click="n=key">{{value.name}}</div>
+                    @click="_handleChangeCateProduct(key)">{{value.name}}</div>
                 </div>
                 <div class="module" v-if="isCollect" 
                 @click="isCollect=!isCollect">
@@ -48,6 +48,9 @@ const CommonVuex = namespace('common');
 export default class  extends Vue {
     // 获取主题
     @CommonVuex.State('theme') private theme!: string;
+
+    // 切换商品分类
+    @CommonVuex.Mutation('handleChangeCateProduct') private handleChangeCateProduct!: () => void;
 
     // 接收父组件数据
     @Prop({
@@ -101,6 +104,19 @@ export default class  extends Vue {
             this.fontColor = headerStyle.navColor;
         });
     }
+
+    // 切换商品分类
+    private _handleChangeCateProduct(key: number): void {
+        if (this.n === key) {
+            return;
+        }
+        this.n = key;
+        this.handleChangeCateProduct();
+        $('html').animate({
+            scrollTop: $('.product_template').offset().top - $('.header_fixed ').outerHeight(),
+        }, 500);
+    }
+
     // 生命周期 - 创建之前
     private beforeCreate(): void {}
 

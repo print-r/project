@@ -12,10 +12,6 @@ import {
   Vue,
 } from 'vue-property-decorator';
 import {  
-  State,
-  Getter,
-  Action,
-  Mutation,
   namespace,
 } from 'vuex-class';
 const CommonVuex = namespace('common');
@@ -33,11 +29,12 @@ export default class Admin extends Vue {
 </script>
 
 <style lang="scss">
+// 公共样式
 @import '../../assets/style/common/common.scss';
+// iconfont
 @import '../../assets/style/iconfont/iconfont.css';
-
+// 媒体查询
 @include media();
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

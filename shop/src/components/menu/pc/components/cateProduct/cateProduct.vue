@@ -1,6 +1,28 @@
 <template>
-    <div class="product_template">
-        <div v-if="!showCateProduct" class="product layout">
+    <div class="product layout">
+        <div class="aside_cate">
+            <div class="aside_content">
+                 <div class="cate_title">
+                    <span>商品分类</span>
+                </div>
+                <div class="cate list_container">
+                    <ul class="cate_list">
+                        <li class="cate_row" v-for="(row, index) in shopClassList" :key="index">
+                            <div class="cate_name" @click="handleOpenCateItem(index)">
+                                <span>{{row.NAME}}</span>
+                                <i class="iconfont icon-you1" :class="{cate_rotate:cateActive == index}"></i>
+                            </div>
+                            <ul class="cate_item">
+                                <li v-for="(val, key) in row.threeClassPC" :key="key" @click="handleGetCateProductData(key)" :class="{current: cateChildActive == key && cateParentActive == index}">
+                                    <span>{{val.NAME}}</span>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="section">
             <div class="top">
                 <div class="left">
                     <ul class="sorts">
@@ -15,7 +37,7 @@
                         <span class="icon">
                             <i class="iconfont icon-sousuo2"></i>
                         </span>
-                        <input type="text" placeholder="本店搜索" id="_search" ref="search_input" v-model="keyword" @input="handleKeywordChange">
+                        <input type="text" placeholder="本店搜索" id="search" ref="search_input" v-model="keyword" @input="handleKeywordChange" >
                     </div>
                 </div>
                 <div class="right">
@@ -63,7 +85,6 @@
                 </div>
             </div>
         </div>
-        <cateProduct v-if="showCateProduct" />
     </div>
 </template>
 <script lang='ts'>
@@ -75,9 +96,8 @@ import {
 } from 'vue-property-decorator';
 import { MenuFindData } from '@/types/menu';
 import { getProductData } from '@/api/product';
-import cateProduct from '../components/cateProduct/cateProduct.vue';
+import { getShopClass } from '@/api/cate';
 import { Debounce } from '@/utils/common';
-
 interface SortsParams {
     name: string;
     sort?: string;
@@ -88,24 +108,11 @@ import {
     namespace,
 } from 'vuex-class';
 const CommonVuex = namespace('common');
-@Component({
-    components: {
-        cateProduct,
-    },
-})
+@Component
 export default class  extends Vue {
-
-    // 预览状态
-    @Prop({
-        type: Boolean,
-        default: false,
-    }) private isPreview!: boolean;
-
+    
     // 获取商家id
     @CommonVuex.State('mid') private mid!: string;
-
-    // 获取商品显示状态
-    @CommonVuex.State('showCateProduct') private showCateProduct!: boolean;
 
     // 排序数据
     private sorts: SortsParams[] = [
@@ -125,7 +132,6 @@ export default class  extends Vue {
             asc: 'icon-uparrow',
         },
     ];
-    
 
     // 默认选中排序
     private active = 0;
@@ -148,41 +154,20 @@ export default class  extends Vue {
     // 关键字
     private keyword = '';
     
-    @Watch('showCateProduct')
-    private changeCateProduct(newVal: boolean, oldValL: boolean): void {
-        if (!newVal) {
-            // 初始化商品列表
-            this.currentPage = 1;
-            this.active = 0;
-            this.page = 1;
-            this.total = 0;
-            this.list = [];
-            this.keyword = '';
-            this.sorts.forEach((val: SortsParams, key: number) => {
-                val.sort = 'desc';
-            });
-            this.init();
-        }
-    }
+    // 分类数据
+    private shopClassList: any[] = [];
 
-    // 初始化
-    private init(): void {
-        // 后台编辑状态
-        if (!this.isPreview) {
-            // 获取商品缓存数据
-            let productStorage = sessionStorage.getItem('productStorage') && JSON.parse(sessionStorage.getItem('productStorage') as string);
-            if (productStorage) {
-                this.list = productStorage.data;
-                this.total = productStorage.total;
-            } else {
-                // 初始化所有商品数据
-                this.getProductData();
-            }
-        } else {
-            // 初始化所有商品数据
-            this.getProductData();
-        }
-    }
+    // 当前分类id
+    private cateId = '';
+
+    // 选中的分类
+    private cateActive = -1;
+
+    // 选中父分类
+    private cateParentActive = -1;
+
+    // 选中的子分类
+    private cateChildActive = -1;
 
     // 获取商品排序数据
     private handleGetProductSortData(index: number, item: SortsParams): void {
@@ -210,13 +195,14 @@ export default class  extends Vue {
 
     // 关键字搜索
     @Debounce()
-    private handleKeywordChange() {
+    private handleKeywordChange(value: string) {
         if (this.keyword === (this.$refs.search_input as HTMLInputElement).value) {
             this.active = 0;
             this.currentPage = 1;
             this.getProductData();
         }
     }
+
     // 上一页
     private handlePrevPage() {
         if (this.currentPage > 1) {
@@ -225,7 +211,7 @@ export default class  extends Vue {
         }
         
     }
-    // 下一页
+    // 下一页 
     private handleNextPage() {
         if (this.currentPage < (this.total / this.pageSize)) {
             this.currentPage = this.currentPage + 1;
@@ -241,6 +227,7 @@ export default class  extends Vue {
         let currentPage = that.currentPage - 1;
         let data = {
             name: that.keyword,
+            cate_id: this.cateId,
             type: index,
             sort: sortType,
             pageIndex: currentPage,
@@ -249,15 +236,72 @@ export default class  extends Vue {
         getProductData(data).then((res: any) => {
             that.list = res.data.data;
             that.total = res.data.pageCount * that.pageSize;
-            if (!sessionStorage.getItem('productStorage')) {
-                // 缓存商品数据
-                sessionStorage.setItem('productStorage', JSON.stringify({
-                    data: that.list,
-                    total: that.total,
-                }));
-            }
         });
         
+    }
+    
+    // 获取分类数据
+    private getShopClass() {
+        let that = this;
+        let data = {
+            member_id: this.mid,
+        };
+        getShopClass(data).then((res: any) => {
+            that.shopClassList = res.data.data;
+        });
+    }
+
+    // 获取分类商品数据
+    private handleGetCateProductData(index: number): void {
+        if (this.cateChildActive === index && this.cateParentActive === this.cateActive ) {
+            return;
+        }
+        // 默认排序
+        this.active = 0;
+        // 排它
+        this.sorts.forEach((val: SortsParams, key: number) => {
+            if (val.sort && key !== index) {
+                val.sort = 'desc';
+            }
+        });
+        // 重置页码
+        this.currentPage = 1;
+        // 分类id
+        this.cateId = this.shopClassList[this.cateActive].threeClassPC[index].ID;
+        // 获取数据
+        this.getProductData();
+        // 选中的分类   
+        this.cateParentActive = this.cateActive;
+        this.cateChildActive = index;
+    }
+
+    // 显示分类
+    private handleOpenCateItem(index: number): void {
+        let cateList = (document.querySelector('.cate_item') as HTMLElement).children;
+        // 关闭上一个分类
+        if (this.cateActive !== -1) {
+            $('.cate_item').eq(this.cateActive).animate({ 
+                height: 0,
+            }, 300);
+        }
+        // 显示当前分类
+        if (this.cateActive !== index) {
+             $('.cate_item').eq(index).animate({ 
+                height: (cateList[0].clientHeight * this.shopClassList[index].threeClassPC.length) + 'px',
+            }, 300);
+        } else {
+            index = -1;
+        }
+        this.cateActive = index;
+    }
+
+    // 重置分类高度
+    private handleResetCateHeight(): void {
+        if (this.cateActive === -1) {
+            return;
+        }
+        let height = $('.cate_item').eq(this.cateActive).children().eq(0).outerHeight();
+        $('.cate_item').eq(this.cateActive).css('height', this.shopClassList[this.cateActive].threeClassPC.length * height);
     }
     
     // 生命周期 - 创建之前
@@ -271,7 +315,14 @@ export default class  extends Vue {
     
     // 生命周期 - 挂载完成
     private mounted() {
-        this.init();
+        // 初始化分类数据
+        this.getShopClass();
+        // 初始化所有商品数据
+        this.getProductData();
+        const resetCateHeight = this.$debounce(this.handleResetCateHeight);
+        window.addEventListener('resize', () => {
+            resetCateHeight();
+        });
     }
 
     // 生命周期 - 更新之前
@@ -301,7 +352,7 @@ export default class  extends Vue {
 }
 </script>
 <style lang='scss' scoped>
-@import '../style/product.scss';
+@import './style/cateProduct.scss';
 </style>
 
 <style lang="scss">

@@ -1,27 +1,8 @@
 
 import { MutationTree } from 'vuex';
-import { ShopState } from './types';
+import { ShopState, IAddParams, ISortParams, IEditParams } from './types';
 import { MenuOption } from '@/types/menu';
 import { state as CommonState } from '../common/state';
-
-export interface IAddParams {
-    index: number;
-    data: MenuOption;
-}
-
-export type SortType = 'up' | 'down';
-
-export interface ISortParams {
-    type?: SortType;
-    index: number;
-    oldIndex?: number;
-    fn?: (index: number) => void;
-}
-
-export interface IEditParams {
-    index: number;
-    data: any;
-}
 
 export const mutations: MutationTree<ShopState> = {
     // 保存店铺数据
@@ -86,7 +67,7 @@ export const mutations: MutationTree<ShopState> = {
                 state.shop[0].template = theme[0];
                 state.shop.splice(0, 1, Object.assign({}, JSON.parse(JSON.stringify(state.shop[0]))));
             }
-            // // 修改主题底部
+            // 修改主题底部
             if (state.shop[state.shop.length - 1].template !== theme[theme.length - 1]) {
                 state.shop[state.shop.length - 1].template = theme[theme.length - 1];
                 state.shop.splice(state.shop.length - 1, 1, Object.assign({}, JSON.parse(JSON.stringify(state.shop[state.shop.length - 1]))));

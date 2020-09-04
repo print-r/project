@@ -157,12 +157,14 @@ import {
     Prop,
     Watch,
 } from 'vue-property-decorator';
+
 @Component
 export default class  extends Vue {
 
-    // 数据监听
-    // @Watch('value')
-    // private valueChange(newVal, oldVal): void {}
+    @Prop({
+        type: Boolean,
+        default: false,
+    }) private isPreview!: boolean;
 
     private width = 0;
 
@@ -189,7 +191,7 @@ export default class  extends Vue {
     // 生命周期 - 挂载完成
     private mounted(): void {
         const vm = this;
-        if (this.$route.name === 'Preview') {
+        if (this.isPreview) {
             // 绑定滚动事件
             window.addEventListener('scroll', function() {
                 let el = document.querySelector('.logo_content') as HTMLElement;

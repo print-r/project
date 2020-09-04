@@ -3,16 +3,6 @@ interface StringObject {
 }
 type UrlParamsResult = string | StringObject;
 
-export function handleDeep(target: any, methodName: string, descriptor: any): any {
-    let method = descriptor.value;
-    descriptor.value = function(...arg: any) {
-      let flag = method.apply(this, arg);
-      if (flag !== false) {
-          this.list[arg[1]].data = Object.assign({}, JSON.parse(JSON.stringify(this.list[arg[1]].data)));
-      }
-   };
-}
-
 // 对象深拷贝
 export function deep<T>(data: T): T {
     return Object.assign({}, JSON.parse(JSON.stringify(data)));
@@ -21,13 +11,39 @@ export function deep<T>(data: T): T {
 // 防抖
 export function debounce(this: Vue, fn: () => void, delay: number = 200): () => void {
     let timer: any = null;
+    let isFirst = true;
     return () => {
-        if (timer) {
-            clearTimeout(timer);
+        // 首次立即执行
+        if (isFirst) {
+            isFirst = false;
+            fn.apply(this);
+            return;
         }
+        clearTimeout(timer);
         timer = setTimeout(() => {
             fn.apply(this);
         }, delay);
+    };
+}
+
+// 装饰器 - 防抖
+export function Debounce(delay: number = 500): (target: any, methodName: string, descriptor: any) => void {
+    return function(target: any, methodName: string, descriptor: any) {
+        let timer: any = null;
+        let method = descriptor.value;
+        let isFirst = true;
+        descriptor.value = function() {
+            // 首次立即执行
+            if (isFirst) {
+                isFirst = false;
+                method.apply(this, arguments);
+                return;
+            }
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                method.apply(this, arguments);
+            }, delay);
+        };
     };
 }
 
@@ -72,7 +88,7 @@ export function handleSetRem(width?: number): void {
 /**
  * 获取url参数值，单个值直接传参数名，获取多个值以数组形式：[参数名，参数名]
  * @param name [string|array] 参数名
- * @return string | array
+ * @return string | object
  */
 export function getUrlParams(name: string | string[]): UrlParamsResult {
     let value: UrlParamsResult = '';

@@ -23,10 +23,11 @@ import {
 import top from '@/components/header/header.vue';
 import asideList from '@/components/aside/aside.vue';
 import { MenuOption } from '@/types/menu';
-import { IAddParams } from '@/modules/admin/store/shop/mutations';
-import { IMenuInitParams } from '@/modules/admin/store/menu/mutations';
-import { getShop } from '@/api/shop';
+import { IAddParams } from '@/modules/admin/store/shop/types';
+import { IMenuInitParams } from '@/modules/admin/store/menu/types';
+import { getShopAdmin } from '@/api/shop';
 import { unload } from '@/utils/common';
+import { RouterOptions } from 'vue-router';
 
 const CommonVuex = namespace('common');
 const MenuVuex = namespace('menu');
@@ -56,7 +57,7 @@ export default class Main extends Vue {
 
     // 深监听 immediate: true
     @Watch('$route', { deep: true })
-    private changeRouter(newVal: any, oldVal: any): void {
+    private changeRouter(newVal: RouterOptions, oldVal: RouterOptions): void {
         this.$nextTick(() => {
             this.init();
         });
@@ -64,7 +65,7 @@ export default class Main extends Vue {
 
     // 监听页面数据是否发生改变
     @Watch('isEdit')
-    private changeEditStatus(newVal: any, oldVal: any): void {
+    private changeEditStatus(newVal: boolean, oldVal: boolean): void {
         let mode = newVal ? 'addEventListener' : 'removeEventListener';
         (window as any)[mode]('beforeunload', unload, false);
     }
@@ -75,13 +76,9 @@ export default class Main extends Vue {
         let mode = this.$route.name as string;
         // 保存当前端
         this.handleSaveCurrentMode(mode);
-        getShop({
-            mapStr: JSON.stringify({
-                shop_ID: 6,
-            }),
-        }).then( (res: any) => {
-            let data = JSON.parse(res.data[`${mode}_template`]);
-            let thmem = res.data[`${mode}_templateID`];
+        getShopAdmin().then( (res: any) => {
+            let data = res.data[`${mode}_template`] && JSON.parse(res.data[`${mode}_template`]);
+            let thmem = res.data[`${mode}_templateID`] || '';
             // 初始化模块
             this.handleInitMenu({
                 data,
@@ -125,7 +122,7 @@ export default class Main extends Vue {
             return;
         }
         const setBaseEm = this.$debounce(this.handleSetBaseEm);
-        // 自执行一次
+        // 自执行
         setBaseEm();
         // 添加 resize 绑定事件
         window.addEventListener('resize', () => {

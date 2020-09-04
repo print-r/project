@@ -1,5 +1,5 @@
 <template>
-    <div class="header" style="font-size: 1px;">
+    <div class="header">
         <div class="header_top" v-if="!production">
             <img src="../../../../assets/images/header_top_a.png" alt="">
         </div>
@@ -16,10 +16,9 @@
                         花妍丽化妆品专卖店
                     </div>
                     <div class="start_dark">
-                        <span class="start">企业认证</span>
-                        <span class="scope">
-                            <i class="scope_num">综合评分：5.0</i>
-                        </span>
+                        <!-- <span class="start">企业认证</span> -->
+                        <img class="shop_img" src="//cdn.dusun.com.cn/20/wx_microapp/red/enterprise.png"  />
+                        <div class="scope">综合评分：5.0</div>
                     </div>
                     
                 </div>
@@ -36,7 +35,7 @@
                 </div>
             </div>
             <div class="site_content">
-                <div class="searchbar search_bg">
+                <div class="searchbar search_bg" @click="handleIntoSearch">
                     <i class="iconfont icon-sousuo2 icon_bg"></i>
                     <i class="text text_bg">搜索</i>
                 </div>
@@ -76,6 +75,10 @@ const CommonVuex = namespace('common');
 export default class  extends Vue {
     // 获取主题
     @CommonVuex.State('theme') private theme!: string;
+    
+    // 获取数据
+    @CommonVuex.State('mid') private mid!: string;
+    @CommonVuex.State('shopId') private shopId!: string;
 
     // 接收父组件数据
     @Prop({
@@ -119,6 +122,17 @@ export default class  extends Vue {
         this.handleChangeThemeStyle();
     }
 
+    // 跳转到 搜索页
+    private handleIntoSearch(): void {
+        console.log(1111, this.mid, this.shopId); 
+        this.$router.push({
+            path: '/keyword',
+            query: {
+                mid: this.mid,
+                shop_id: this.shopId,
+            },
+        });
+    }
 
     // 生命周期 - 创建之前
     private beforeCreate(): void {}
@@ -132,6 +146,8 @@ export default class  extends Vue {
     // 生命周期 - 挂载完成
     private mounted(): void {
         this.handleChangeThemeStyle();
+
+        
     }
 
     // 生命周期 - 更新之前

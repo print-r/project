@@ -1,6 +1,5 @@
 import { MutationTree } from 'vuex';
 import { CommonState, PhoneSize } from './types';
-import themeList from '@/components/menu/theme/pc';
 
 export const mutations: MutationTree<CommonState> = {
     // 添加缓存
@@ -55,5 +54,9 @@ export const mutations: MutationTree<CommonState> = {
     // 修改数据发生变化状态
     handleChangeEditStatus(state, status) {
         state.isEdit = status;
+    },
+    // 切换商品分类
+    handleChangeCateProduct(state) {
+        state.showCateProduct = !state.showCateProduct;
     },
 };

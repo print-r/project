@@ -23,9 +23,17 @@ export const mutations: MutationTree<CommonState> = {
     handleSaveMid(state, id: string) {
         state.mid = id;
     },
+    // 保存店铺id
+    handleSaveShopId(state, id: string) {
+        state.shopId = id;
+    },
     // 切换主题
     handleChangeTheme(this: any, state, theme: string) {
         // 保存主题
         state.theme = theme;
+    },
+    // 切换商品分类
+    handleChangeCateProduct(state) {
+        state.showCateProduct = !state.showCateProduct;
     },
 };

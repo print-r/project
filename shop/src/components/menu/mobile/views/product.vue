@@ -1,6 +1,6 @@
 <template>
-    <div class="product" style="font-size:1px;">
-        <div class="nav-wrap">
+    <div class="product" >
+        <div :class="[isFix == 0 ? '': 'nav_fix_search', 'nav-wrap']">
             <div class="nav"
             v-for="(item, index) in sorts"
             :key="index">
@@ -12,11 +12,16 @@
                 </div> 
             </div>
         </div>
-        <ul class="product-wrap clear">
+        <ul class="clear" :class="[isFix == 0 ? '': 'product_fix_search', 'product-wrap']">
+            <div v-if="goodsList.length == 0" class="null_product">
+                <img class="img" src="//cdn.dusun.com.cn/20/wx_microapp/red/pic_result.png" alt="">
+                <p class="tit">抱歉，未搜索到相关商品</p>
+            </div>
             <ul class="left fl">
                 <li class="list-wrap fl" 
                 v-for="(item, key) in goodsListLeft"
-                :key="key">
+                :key="key"
+                @click="handleJumpUrl(item.id)">
                     <img :src="item.pic" alt="">
                     <p class="name">{{item.NAME}}</p>
                     <p class="price"><span style="font-size:14px">￥</span>{{item.SALE_PRICE}}</p>
@@ -25,7 +30,8 @@
             <ul class="right fr">
                 <li class="list-wrap fr" 
                 v-for="(item, key) in goodsListRight"
-                :key="key">
+                :key="key"
+                @click="handleJumpUrl(item.id)">
                     <img :src="item.pic" alt="">
                     <p class="name">{{item.NAME}}</p>
                     <p class="price"><span style="font-size:14px">￥</span>{{item.SALE_PRICE}}</p>
@@ -60,10 +66,32 @@ export default class  extends Vue {
         type: Boolean,
         default: false,
     }) private isPreview!: boolean;
-    
+
+    // 搜索name
+    @Prop({
+        type: String,
+        default: false,
+    }) private searchWord!: string;
+
+    // 是否固定位置 0:首页； 1：商品搜索页
+    @Prop({
+        type: Number,
+        default: 0,
+    }) private isFix!: number;
+
+    // 分类id
+    @Prop({
+        type: String,
+        default: '',
+    }) private cateId!: string;
+
     // 获取商家id
     @CommonVuex.State('mid') private mid!: string;
 
+     // 保存商家id
+    @CommonVuex.Mutation('handleSaveMid') 
+    private handleSaveMid!: (mid: string) => void;
+    
     // 自定义，初始active位置
     private active = 0;  
     // 当前页数
@@ -98,6 +126,26 @@ export default class  extends Vue {
     
     private loading = false;
 
+    // 商品跳转
+    private handleJumpUrl(id: any) {
+        let cateUrl = `https://www.dusun.com.cn/ds-${id}.html`;
+        window.open(cateUrl);
+    }
+
+    
+    // 数据监听
+    @Watch('searchWord')
+    private searchWordChange(newVal: string, oldVal: string): void {
+        this.searchWord = newVal;
+        // 清空数据
+        this.currentPage = 0;
+        this.goodsListLeft = [];
+        this.goodsListRight = [];
+        this.cateId = '';
+        // 初始化所有商品数据
+        this.getProductData();
+    }
+
 
     // 获取商品排序数据
     private handleGetProductSortData(index: number, item: SortsParams): void {
@@ -126,11 +174,12 @@ export default class  extends Vue {
         let index = that.active ? that.active : 0;
         let sortType = that.sorts[index].sort === 'asc' ? 'asc' : 'desc';
         let data = {
-            name: '',
+            name: this.searchWord,
+            cate_id: this.cateId,
             type: index,
             sort: sortType,
             pageIndex: that.currentPage,
-            member_id: this.mid,
+            member_id: that.mid,
         };
         getProductData(data).then((res: any) => {
             that.goodsList = res.data.data;
@@ -146,8 +195,13 @@ export default class  extends Vue {
                     }
                 } catch (e) {}
             });
-            // 数据保存 本地
-            localStorage.setItem('goodsList', JSON.stringify(res.data.data));
+            if (!sessionStorage.getItem('productStorage')) {
+                // 数据保存 本地
+                sessionStorage.setItem('productStorage', JSON.stringify({
+                    data: res.data.data,
+                    total: res.data.pageCount * 12,
+                }));
+            }
             that.pageCount =  res.data.pageCount;
         });
         
@@ -165,11 +219,13 @@ export default class  extends Vue {
     // 生命周期 - 挂载完成
     private mounted() {
         let that = this;
-        // 初始化所有商品数据
-        this.getProductData();
-        
+        // 保存商家id
+        let params: any = this.$getUrlParams(['mid', 'shop_id']);
+        this.handleSaveMid(params.mid);
         // 判断预览状态 -- 有加载更多请求
         if (this.isPreview) {
+            // 初始化所有商品数据
+            this.getProductData();
             this.$nextTick(() => {
                 // 预览时 加载更多
                 if (document.querySelector('.preview_render')) {
@@ -179,8 +235,6 @@ export default class  extends Vue {
                         let clientHeight = this.clientHeight;
                         let scrollTop = this.scrollTop;
                         let scrollHeight = this.scrollHeight;
-                        console.log('后台');
-                        console.log(clientHeight, scrollTop, scrollHeight);
                         if ((clientHeight + scrollTop) === scrollHeight) {
                             if (that.currentPage < that.pageCount) {
                                 that.loading =  false;
@@ -191,7 +245,7 @@ export default class  extends Vue {
                     });
                 
                 } else {
-                    //  h5页面 -- 加载更多
+                    //  h5页面 -- 加载更多 
                     window.onscroll = function() {
                         // console.log('web');
                         // 变量scrollTop是滚动条滚动时，距离顶部的距离
@@ -213,25 +267,25 @@ export default class  extends Vue {
                     };
                     
                 }
-            });   
-                
+            });                
         } else {
-            // 查询本地是否 有商品数据
-            // let goodsListLocal: any = localStorage.getItem('goodsList');
-            // let goodsListData: any = JSON.parse(goodsListLocal);
-            // // 非预览状态--无分页请求，并且无需一直请求
-            // goodsListData.forEach((data: never, i: number) => {
-            //     try {
-            //         if (i > 3 && !this.isPreview) {
-            //             throw Error;
-            //         }
-            //         if (i % 2 === 0) {
-            //             that.goodsListLeft.push(data); 
-            //         } else {
-            //             that.goodsListRight.push(data); 
-            //         }
-            //     } catch (e) {}
-            // });
+            // 本地缓存商品数据
+            let data = sessionStorage.getItem('productStorage') && JSON.parse(sessionStorage.getItem('productStorage') as string);
+            if (data) {
+                this.goodsList = data.data;
+                data.data.forEach((v: never, k: number) => {
+                    if (k < 4) {
+                        if (k % 2 === 0) {
+                            this.goodsListLeft.push(v); 
+                        } else {
+                            this.goodsListRight.push(v); 
+                        }
+                    }
+                });
+            } else {
+                // 初始化所有商品数据
+                this.getProductData();
+            }
         }
     }
 

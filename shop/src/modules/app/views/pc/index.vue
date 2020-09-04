@@ -8,30 +8,24 @@
 <script lang='ts'>
 import {
     Component,
-    Vue,
     Watch,
 } from 'vue-property-decorator';
-import {
-    namespace,
-} from 'vuex-class';
+import { namespace } from 'vuex-class';
 import { getShop } from '@/api/shop';
 import { ITheme } from '@/modules/admin/store/common/types';
+import { CommonController  } from '../../controller/common';
 const CommonVuex = namespace('common');
 @Component({
-    name: '',
+    name: 'PC',
     components: {},
 })
-export default class  extends Vue {
+export default class  extends CommonController {
 
     // 店铺数据
     private list = [];
 
     // 背景图
     private background = '';
-
-    // 保存商家id
-    @CommonVuex.Mutation('handleSaveMid') 
-    private handleSaveMid!: (mid: string) => void;
 
     // 保存主题
     @CommonVuex.Mutation('handleChangeTheme')
@@ -51,25 +45,17 @@ export default class  extends Vue {
 
     // 生命周期 - 挂载完成
     private mounted(): void {
-        let params: any = this.$getUrlParams(['mid', 'shop_id']);
-        if (!params.mid || !params.shop_id) {
-            this.$message.error('参数有误，3秒后跳转');
-            setTimeout(() => {
-                window.history.go(-1);
-            }, 3000);
-        } else {
-            // 保存商家id
-            this.handleSaveMid(params.mid);
-            getShop({
-               mapStr: JSON.stringify({
-                   shop_ID: params.shop_id,
-               }),
-            }).then( (res: any) => {
-                this.list = JSON.parse(res.data.pc_template);
-                this.handleChangeTheme(res.data.pc_templateID);
-                this.background = this.getThemeList.pc[res.data.pc_templateID].background as string;
-            });
-        }
+        getShop({
+            mapStr: JSON.stringify({
+                shop_ID: this.shopId,
+            }),
+        }).then( (res: any) => {
+            this.list = JSON.parse(res.data.pc_template);
+            this.handleChangeTheme(res.data.pc_templateID);
+            this.background = this.getThemeList.pc[res.data.pc_templateID].background as string;
+        }).catch( (err: any) => {
+           this.$message.error('请求发生错误，请重新访问');
+        });
     }
 
     // 生命周期 - 更新之前

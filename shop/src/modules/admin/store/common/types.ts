@@ -17,4 +17,5 @@ export interface CommonState {
     mid: string;
     dragStatus: boolean;
     isEdit: boolean;
+    showCateProduct: boolean;
   }

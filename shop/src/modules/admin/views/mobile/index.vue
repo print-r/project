@@ -22,7 +22,6 @@
             </div>
         </draggable>
         <section>
-            <!-- 右侧功能框 -->
             <div class="utils_list" v-for="(item,index) in list" :key="index" :style="`top:${top}px;left:${left}px;`" v-show="index === editIndex">
                 <!-- 右侧功能框 -->
                 <div class="handle">
@@ -73,7 +72,7 @@ import { MenuOption } from '@/types/menu';
 import { handleSetRem } from '@/utils/common';
 import { ReturnParams } from '@/abstract/menuUtils';
 import { PhoneSize } from '../../store/common/types';
-import { ISortParams, IAddParams, IEditParams, SortType } from '@/modules/admin/store/shop/mutations';
+import { ISortParams, IAddParams, IEditParams, SortType } from '@/modules/admin/store/shop/types';
 
 interface MenuData {
     index: number;
@@ -91,7 +90,7 @@ export default class Mobile extends Vue {
     // 拖拽状态
     @CommonVuex.State('dragStatus') private dragStatus!: boolean;
 
-    // 获取主题
+    // 主题
     @CommonVuex.State('theme') private theme!: string;
 
     // 修改拖拽状态
@@ -289,7 +288,7 @@ export default class Mobile extends Vue {
         });
     }
 
-    // 数据插入框位置
+    // 计算数据插入框位置
     private handleSetPlace(index?: number): void {
         index = index ?? this.editIndex;
         if (index === -1) {

@@ -48,7 +48,7 @@ import {
 import draggable from 'vuedraggable';
 import { MenuOption } from '@/types/menu';
 import { ThemeOptions } from '@/types/theme';
-import { IAddParams } from '@/modules/admin/store/shop/mutations';
+import { IAddParams } from '@/modules/admin/store/shop/types';
 const CommonVuex = namespace('common');
 const MenuVuex = namespace('menu');
 @Component({

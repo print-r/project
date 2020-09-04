@@ -8,3 +8,12 @@ export const getShop = (data?: any) => {
         data,
     }, true);
 };
+
+// 后台店铺
+export const getShopAdmin = (data?: any) => {
+    return request({
+        method: 'POST',
+        url: '/getShop_Preview.do',
+        data,
+    });
+};

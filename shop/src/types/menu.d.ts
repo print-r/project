@@ -22,7 +22,7 @@ export interface MenuOption {
     name: string // 模板名称
     img: string // 组件图片
     order: number // 排序
-    fixed: boolean // 是否固定组件 TODO:该组件的位置无法更改
+    fixed: boolean // 固定组件 TODO:该组件的位置无法更改
     show: boolean // 是否显示
     isEdit: boolean // 是否可编辑
     isDelete: boolean // 组件是否可删除

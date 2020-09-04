@@ -5,15 +5,12 @@
             v-for="(item,key) in dataList" 
             :key="key" 
             :class="key==n?'active':''"
-            @click="n=key" >
-                <router-link :to="{path: item.path}">
-                    <!-- <p class="iconfont" :class="item.icon" v-if="item.icon == 'icon-fenlei'" style="font-size: .36rem"></p> -->
+            >
+                <div @click="handleJumpUrl(key)">
                     <p class="iconfont" :class="item.icon" v-if="item.icon == 'icon-fenlei'" style="font-size: .36rem"></p>
                     <p class="iconfont" :class="item.icon" v-else></p>
                     <p class="tit">{{item.name}}</p>
-                </router-link>
-                
-                
+                </div>
                 
             </li>
         </ul> 
@@ -26,6 +23,10 @@ import {
     Watch,
     Prop,
 } from 'vue-property-decorator';
+import {
+    namespace,
+} from 'vuex-class';
+const CommonVuex = namespace('common');
 @Component({
     name: '',
     components: {},
@@ -37,29 +38,57 @@ export default class  extends Vue {
         default: false,
     }) private isPreview!: boolean;
 
-    private previewEl: any = null;
+    // active 下标位置
+    @Prop({
+        type: Number,
+        default: 0,
+    }) private footerIndex!: number;
 
-    private n = 0;  // 自定义，初始active位置
+    @CommonVuex.State('mid') private mid!: string;
+
+    @CommonVuex.State('shopId') private shopId!: string;
+
+    // 自定义，初始active位置
+    private n = this.footerIndex ? this.footerIndex : 0;  
+
+    private previewEl: any = null;
+    // 底部的数据
     private dataList = [
         {
             icon: 'icon-shouye1',
             name: '首页',
-            path: 'index',
+            path: '/mobile',
             id: 0,
         },
         {
             icon: 'icon-fenlei',
             name: '商品分类',
-            path: 'cate',
+            path: '/cate',
             id: 1,
         },  
         {
             icon: 'icon-kefu3',
             name: '客服',
-            path: 'service',
+            path: 'http://q.url.cn/s/Ecps3Tm?_type=wpa',
             id: 2,
         },      
     ];
+
+    private handleJumpUrl(index: number) {
+        if (index > 1) {
+            window.open(this.dataList[index].path);
+        } else {
+            let mid = this.mid;
+            let shopId = this.shopId;
+            this.$router.push({
+                path: this.dataList[index].path,
+                query: {
+                    mid,
+                    shop_id: shopId,
+                },
+            });
+        }
+    }
 
     // 生命周期 - 创建之前
     private beforeCreate(): void {}

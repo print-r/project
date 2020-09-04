@@ -1,7 +1,7 @@
 <template>
     <div class="mobile">
          <div class="item" v-for="(item,index) in list" :key="index">
-            <render :value="item" :mode="'mobile'" :key="index" :isPreview="true" :production="true"></render>
+            <render :value="item" :mode="'mobile'" :key="index" :isPreview="true" :production="true" :footerIndex="footerIndex"></render>
         </div>
     </div>
 </template>
@@ -15,29 +15,25 @@ import {
     namespace,
 } from 'vuex-class';
 import { getShop } from '@/api/shop';
-import { handleSetRem } from '@/utils/common';
+import { CommonController  } from '../../controller/common';
 const CommonVuex = namespace('common');
 @Component({
-    name: '',
+    name: 'Mobile',
     components: {},
 })
-export default class  extends Vue {
-    
+export default class  extends CommonController {
+    // 底部active 的坐标
+    private footerIndex = 0;
+
     // 店铺数据
     private list = [];
-
-    // 保存商家id
-    @CommonVuex.Mutation('handleSaveMid') 
-    private handleSaveMid!: (mid: string) => void;
 
     // 保存主题
     @CommonVuex.Mutation('handleChangeTheme')
     private handleChangeTheme!: (theme: string) => void;
 
     // 生命周期 - 创建之前
-    private beforeCreate(): void {
-        handleSetRem();
-    }
+    private beforeCreate(): void {}
 
     // 生命周期 - 创建完成
     private created(): void {}
@@ -47,36 +43,29 @@ export default class  extends Vue {
 
     // 生命周期 - 挂载完成
     private mounted(): void {
-        let params: any = this.$getUrlParams(['mid', 'shop_id', 'isPreview']);
-        if (!params.shop_id || !params.mid) {
-            this.$message.error('参数有误，3秒后跳转');
-            setTimeout(() => {
-                window.history.go(-1);
-            }, 3000);
-        } else {
-            // 保存商家id
-            this.handleSaveMid(params.mid);
-            getShop({
-               mapStr: JSON.stringify({
-                   shop_ID: params.shop_id,
-               }),
-            }).then( (res: any) => {
-                let data: any = res.data;
-                let theme = '';
-                let list = [];
-                // 预览
-                if (params.isPreview) {
-                    let previewData = JSON.parse(data.preview_template);
-                    list = previewData.data;
-                    theme = previewData.theme;
-                } else {
-                    list = JSON.parse(data.mobile_template);
-                    theme = data.mobile_templateID;
-                }
-                this.list = list;
-                this.handleChangeTheme(theme);
-            });
-        }
+        let isPreview = this.$getUrlParams('isPreview') as string; 
+        getShop({
+            mapStr: JSON.stringify({
+                shop_ID: this.shopId,
+            }),
+        }).then( (res: any) => {
+            let data: any = res.data;
+            let theme = '';
+            let list = [];
+            // 预览
+            if (isPreview) {
+                let previewData = JSON.parse(data.preview_template);
+                list = previewData.data;
+                theme = previewData.theme;
+            } else {
+                list = JSON.parse(data.mobile_template);
+                theme = data.mobile_templateID;
+            }
+            this.list = list;
+            this.handleChangeTheme(theme);
+        }).catch( (err: any) => {
+           this.$message.error('请求发生错误，请重新访问');
+        });
     }
 
     // 生命周期 - 更新之前

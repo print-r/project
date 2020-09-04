@@ -1,9 +1,19 @@
-/**
- * 菜单组件数据 
- */
-import { MenuOption } from '@/types/menu';
+"use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+exports.__esModule = true;
+exports.menuData = exports.commonHeaderStyle = void 0;
 // 头部公共主题样式
-export const commonHeaderStyle = {
+exports.commonHeaderStyle = {
     mobile: {
         theme: {
             1: {
@@ -11,7 +21,7 @@ export const commonHeaderStyle = {
             },
             2: {
                 backgroundImage: 'http://cdn.dusun.com.cn/20/wx_microapp/image/bg_b.png',
-                addedClass: 'defalutThemeStyle',
+                addedClass: 'defalutThemeStyle'
             },
             3: {
                 backgroundImage: 'http://cdn.dusun.com.cn/20/wx_microapp/image/bg_c_s.png',
@@ -30,8 +40,8 @@ export const commonHeaderStyle = {
             },
             8: {
                 backgroundImage: 'http://cdn.dusun.com.cn/20/wx_microapp/image/bg_f_s.png',
-            },
-        },
+            }
+        }
     },
     pc: {
         theme: {
@@ -39,61 +49,55 @@ export const commonHeaderStyle = {
                 shopNameColor: '#333',
                 navColor: '#fff',
                 backgroundColor: '#333',
-                backgroundImage: '',
+                backgroundImage: ''
             },
             2: {
                 shopNameColor: '#333',
                 navColor: '#fff',
                 backgroundColor: '#333',
-                backgroundImage: require('../../../assets/images/theme/nav_a.png'),
+                backgroundImage: require('../../../assets/images/theme/nav_a.png')
             },
             3: {
                 shopNameColor: '#2b6d41',
                 navColor: '#fff',
                 backgroundColor: '#2b6d41',
-                backgroundImage: require('../../../assets/images/theme/nav_b.png'),
-               
+                backgroundImage: require('../../../assets/images/theme/nav_b.png')
             },
             4: {
                 shopNameColor: '#333',
                 navColor: '#fff',
                 backgroundColor: '#e6232b',
-                backgroundImage: '#fff',
-               
+                backgroundImage: '#fff'
             },
             5: {
                 shopNameColor: '#333',
                 navColor: '#fff',
                 backgroundColor: '#bd8765',
-                backgroundImage: '#FFFBF2',
-               
+                backgroundImage: '#FFFBF2'
             },
             6: {
                 shopNameColor: '#333',
                 navColor: '#fff',
                 backgroundColor: '#a1a7b3',
-                backgroundImage: '',
-               
+                backgroundImage: ''
             },
             7: {
                 shopNameColor: '#333',
                 navColor: '#fff',
                 backgroundColor: '#545a57',
-                backgroundImage: require('../../../assets/images/theme/nav_f.png'),
-               
+                backgroundImage: require('../../../assets/images/theme/nav_f.png')
             },
             8: {
                 shopNameColor: '#333',
                 navColor: '#333',
                 backgroundColor: '#f1efee',
-                backgroundImage: require('../../../assets/images/theme/nav_g.png'),
-               
-            },
-        },
-    },
+                backgroundImage: require('../../../assets/images/theme/nav_g.png')
+            }
+        }
+    }
 };
 // 组件列表
-export const menuData: MenuOption[] = [
+exports.menuData = [
     {
         template: 'header',
         name: '头部',
@@ -105,9 +109,7 @@ export const menuData: MenuOption[] = [
         isDelete: false,
         max: 1,
         exist: 0,
-        data: {
-          ...commonHeaderStyle,
-        },
+        data: __assign({}, exports.commonHeaderStyle)
     },
     {
         template: 'slide',
@@ -126,9 +128,9 @@ export const menuData: MenuOption[] = [
             list: [],
             validate: {
                 max: 6,
-                suffix: ['jpeg', 'jpg', 'png'],
-            },
-        },
+                suffix: ['jpeg', 'jpg', 'png']
+            }
+        }
     },
     {
         template: 'product',
@@ -145,32 +147,32 @@ export const menuData: MenuOption[] = [
             mobile: {
                 theme: {
                     1: {
-                        backgroundColor: '#fff',
+                        backgroundColor: '#fff'
                     },
                     2: {
-                        backgroundColor: 'none',
+                        backgroundColor: 'none'
                     },
                     3: {
-                        backgroundColor: '#fff',
+                        backgroundColor: '#fff'
                     },
                     4: {
-                        backgroundColor: '#fff',
+                        backgroundColor: '#fff'
                     },
                     5: {
-                        backgroundColor: '#fff',
+                        backgroundColor: '#fff'
                     },
                     6: {
-                        backgroundColor: '#fff',
+                        backgroundColor: '#fff'
                     },
                     7: {
-                        backgroundColor: '#fff',
+                        backgroundColor: '#fff'
                     },
                     8: {
-                        backgroundColor: '#fff',
-                    },
-                },
-            },
-        },
+                        backgroundColor: '#fff'
+                    }
+                }
+            }
+        }
     },
     {
         template: 'footer',
@@ -183,7 +185,7 @@ export const menuData: MenuOption[] = [
         isDelete: false,
         max: 1,
         exist: 0,
-        data: {},
+        data: {}
     },
     {
         template: 'coupon',
@@ -198,7 +200,6 @@ export const menuData: MenuOption[] = [
         utils: 'coupon',
         utils_title: '优惠券设置',
         exist: 0,
-        data: {},
+        data: {}
     },
-    
 ];

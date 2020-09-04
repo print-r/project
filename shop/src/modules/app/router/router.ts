@@ -5,12 +5,12 @@ const routeList = [
       redirect: '/mobile',
     },
     {
-      path: '/mobile',
+      path: '/mobile', 
       name: 'Mobile',
       component: () => _import('mobile/index'),
       meta: {
         title: '大尚国际 - 商家店铺 - 移动端',
-        keepAlive: false,
+        keepAlive: true,
       },
     },
     {
@@ -28,7 +28,25 @@ const routeList = [
       component: () => _import('cate/index'),
       meta: {
         title: '大尚国际 - 商家店铺 - 分类',
-        keepAlive: false,
+        keepAlive: true,
+      },
+    },
+    {
+      path: '/search',
+      name: 'Search',
+      component: () => _import('search/index'),
+      meta: {
+        title: '大尚国际 - 商家店铺 - 搜索商品',
+        keepAlive: true,
+      },
+    },
+    {
+      path: '/keyword',
+      name: 'Keyword',
+      component: () => _import('search/keyword'),
+      meta: {
+        title: '大尚国际 - 商家店铺 - 搜索',
+        keepAlive: true,
       },
     },
 ];

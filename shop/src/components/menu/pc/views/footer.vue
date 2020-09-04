@@ -175,7 +175,7 @@ export default class  extends Vue {
 
     // 跳转外部链接 -- 图片
     private jumpImg(url: string) {
-        window.location.href = url;
+        window.open(url);
     }
 
     // 跳转外部链接 -- 链接
@@ -183,7 +183,7 @@ export default class  extends Vue {
         if (type === '0') {
             url = 'http://www.dusun.com.cn/article/' + url + '.html';
         }
-        window.location.href = url;
+        window.open(url);
     }
 
     // 生命周期 - 创建之前

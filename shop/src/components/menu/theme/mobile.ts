@@ -5,7 +5,7 @@ import { ThemeOptions } from '@/types/theme';
 const theme: ThemeOptions = {
     1: {
         title: '主题一',
-        img: require('../../../assets/images/theme/bg_a_s.png'),
+        img: 'http://cdn.dusun.com.cn/20/wx_microapp/image/bg_a_s.png',
         show: true,
         data: {
             container: ['header', 'slide', 'product', 'footer'],
@@ -13,7 +13,7 @@ const theme: ThemeOptions = {
     },
     2: {
         title: '主题二',
-        img: require('../../../assets/images/theme/bg_b.png'),
+        img: 'http://cdn.dusun.com.cn/20/wx_microapp/image/bg_b.png',
         show: true,
         data: {
             container: ['header', 'slide', 'product', 'footer'],
@@ -21,7 +21,7 @@ const theme: ThemeOptions = {
     },
     3: {
         title: '主题三',
-        img: require('../../../assets/images/theme/bg_c_s.png'),
+        img: 'http://cdn.dusun.com.cn/20/wx_microapp/image/bg_c_s.png',
         show: true,
         data: {
             container: ['header', 'slide', 'product', 'footer'],
@@ -29,7 +29,7 @@ const theme: ThemeOptions = {
     },
     4: {
         title: '主题四',
-        img: require('../../../assets/images/theme/bg_d_s.png'),
+        img: 'http://cdn.dusun.com.cn/20/wx_microapp/image/bg_d_s.png',
         show: true,
         data: {
             container: ['header', 'slide', 'product', 'footer'],
@@ -37,7 +37,7 @@ const theme: ThemeOptions = {
     },
     5: {
         title: '主题五',
-        img: require('../../../assets/images/theme/bg_g_s.png'),
+        img: 'http://cdn.dusun.com.cn/20/wx_microapp/image/bg_g_s.png',
         show: true,
         data: {
             container: ['header', 'slide', 'product', 'footer'],
@@ -45,7 +45,7 @@ const theme: ThemeOptions = {
     },
     6: {
         title: '主题六',
-        img: require('../../../assets/images/theme/bg_h_s.png'),
+        img: 'http://cdn.dusun.com.cn/20/wx_microapp/image/bg_h_s.png',
         show: true,
         data: {
             container: ['header', 'slide', 'product', 'footer'],
@@ -53,7 +53,7 @@ const theme: ThemeOptions = {
     },
     7: {
         title: '主题七',
-        img: require('../../../assets/images/theme/bg_e_s.png'),
+        img: 'http://cdn.dusun.com.cn/20/wx_microapp/image/bg_e_s.png',
         show: true,
         data: {
             container: ['header', 'slide', 'product', 'footer'],
@@ -61,7 +61,7 @@ const theme: ThemeOptions = {
     },
     8: {
         title: '主题八',
-        img: require('../../../assets/images/theme/bg_f_s.png'),
+        img: 'http://cdn.dusun.com.cn/20/wx_microapp/image/bg_f_s.png',
         show: true,
         data: {
             container: ['header', 'slide', 'product', 'footer'],

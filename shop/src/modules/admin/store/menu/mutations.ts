@@ -1,14 +1,9 @@
 
 import { MutationTree } from 'vuex';
-import { MenuState } from './types';
+import { MenuState, IMenuInitParams } from './types';
 import { MenuOption } from '@/types/menu';
 import { state as CommonState } from '../common/state';
-import { IAddParams } from '../shop/mutations';
-
-export interface IMenuInitParams {
-    data: MenuOption[];
-    thmem: string;
-}
+import { IAddParams } from '../shop/types';
 
 export const mutations: MutationTree<MenuState> = {
     // 初始化组件数据

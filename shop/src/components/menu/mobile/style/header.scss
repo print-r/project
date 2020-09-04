@@ -13,7 +13,7 @@
         .bg {
             position: absolute;
             top: 0;
-            width: 7.5rem;
+            width: 100%;
             height: 4.7rem;
         }
 
@@ -44,28 +44,24 @@
                     color: rgba(255, 255, 255, 1);
                 }
                 .start_dark {
-                    margin-top: 0.2rem;
-                    .start {
-                        padding: 0.06rem 0.07rem;
-                        width: 0.55rem;
-                        height: 0.14rem;
-                        background: rgba(255, 244, 244, 1);
-                        border-radius: 0.05rem;
-                        font-size: 0.14rem;
-                        font-weight: 400;
-                        color: rgba(232, 60, 60, 1);
-                        line-height: 0.14rem;
+                    margin-top: 8px;
+                    height: 16px;
+                    .shop_img {
+                        display: inline-block;
+                        vertical-align: top;
+                        width: 37px;
+                        height: 14px;
                     }
                     .scope {
-                        height: 0.16rem;
-                        margin-top: 0.04rem;
-                        .scope_num {
-                            font-size: 0.18rem;
-                            font-weight: 400;
-                            color: rgba(161, 161, 161, 1);
-                            line-height: 0.14rem;
-                            text-shadow: 0 0 0.03rem rgba(0, 0, 0, 0.2);
-                        }
+                        display: inline-block;
+                        vertical-align: top;
+                        height: 14px;
+                        line-height: 16px;
+                        margin-left: 6px;
+                        font-size: 12px;
+                        font-weight: 400;
+                        color: rgba(161, 161, 161, 1);
+                        text-shadow: 0 0 0.03rem rgba(0, 0, 0, 0.2);
                     }
                 }
             }
@@ -154,7 +150,6 @@
                             color: rgba(255, 255, 255, 1);
                             text-shadow: 0 0 0.03rem rgba(0, 0, 0, 0.2);
                         }
-                        
                     }
                     .nav_active {
                         position: relative;
@@ -167,10 +162,10 @@
                         }
                         .line {
                             position: absolute;
-                            right: .16rem;
+                            right: 0.16rem;
                             bottom: -8px;
-                            width: .44rem;
-                            height: .06rem;
+                            width: 0.44rem;
+                            height: 0.06rem;
                             background: rgba(255, 255, 255, 1);
                             border-radius: 3px;
                         }
@@ -181,50 +176,40 @@
     }
 }
 
-
-.defalutThemeStyle
-{
-    .name
-    {
+.defalutThemeStyle {
+    .name {
         color: #000 !important;
     }
 
-    .scope_num
-    {
+    .scope_num {
         color: #999 !important;
     }
 
-    .navli 
-    {
-        .name
-        {
+    .navli {
+        .name {
             color: #000 !important;
         }
 
-        .nav_active
-        {
+        .nav_active {
             color: #000 !important;
         }
 
-        .line
-        {
+        .line {
             display: none !important;
         }
     }
 
-    .search_bg
-    {
-        background-color: #EFEFEF !important;
-        
-        .iconfont,.text
-        {
+    .search_bg {
+        background-color: #efefef !important;
+
+        .iconfont,
+        .text {
             color: #656565 !important;
         }
     }
 
-    .panel_bg
-    {
-        color: #FB6137 !important;
-        border: 1px solid #FB6137 !important;
+    .panel_bg {
+        color: #fb6137 !important;
+        border: 1px solid #fb6137 !important;
     }
 }

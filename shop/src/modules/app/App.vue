@@ -1,14 +1,27 @@
 <template>
   <div id="app">
-    <router-view v-wechat-title="$route.meta.title" />
+    <keep-alive :include="keepAlive">
+      <router-view v-wechat-title="$route.meta.title" />
+    </keep-alive>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import {  
+  namespace,
+} from 'vuex-class';
+const CommonVuex = namespace('common');
 @Component
 export default class App extends Vue {
-  private created(): void {}
+  // 保存缓存组件名称
+  @CommonVuex.Action('handleSyncAddCache') public handleSyncAddCache!: () => void; 
+  // 缓存组件名称
+  @CommonVuex.State('keepAlive') public keepAlive!: string[];
+  private created(): void {
+    // 保存缓存组件名称
+    this.handleSyncAddCache();
+  }
 }
 </script>
 
